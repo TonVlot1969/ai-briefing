@@ -1,28 +1,431 @@
 <!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8">
+<html lang="nl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="AI Briefing">
-<meta name="theme-color" content="#0d1117">
+<meta name="theme-color" content="#080d20">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon-512.png" type="image/png">
 <link rel="apple-touch-icon" href="icon-512.png">
 <title>AI Briefing</title>
-<style>*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}html,body{margin:0;padding:0;height:100%}body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:#0d1117;color:#e6edf3;display:flex;flex-direction:column;min-height:100vh;padding:24px 20px 40px}header{text-align:center;margin-bottom:18px}header h1{font-size:22px;margin:0 0 4px}header p{font-size:14px;color:#8b949e;margin:0}.controls{display:flex;gap:14px;margin:10px 0 22px}button{flex:1;border:none;border-radius:18px;font-size:20px;font-weight:700;padding:28px 10px;color:#fff;cursor:pointer}#play{background:#238636}#pause{background:#9e6a00}#stop{background:#b62324}.big{font-size:24px}.status{text-align:center;font-size:14px;color:#8b949e;margin-bottom:16px;min-height:18px}.script{background:#161b22;border:1px solid #30363d;border-radius:14px;padding:18px 18px 8px;font-size:17px;line-height:1.6;overflow-y:auto}.script p{margin:0 0 14px}.script .lead{color:#58a6ff;font-weight:600}.sources{margin-top:18px;font-size:13px;color:#8b949e}.sources a{color:#58a6ff;word-break:break-all}.hint{text-align:center;font-size:12px;color:#6e7681;margin-top:22px}</style></head>
+<style>
+:root{
+  /* sampled from icon-512.png: neon cyan to violet on deep navy */
+  --bg:#080d20;
+  --surface:#101a33;
+  --surface2:#1a2647;
+  --border:#26355e;
+  --text:#e6f3ff;
+  --muted:#93a4c8;
+  --faint:#6a7aa3;
+  --cyan:#3ee9f0;
+  --violet:#a855f7;
+  --magenta:#d14ce8;
+  --ink:#08122c;
+  --link:#5ee7f5;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{font-family:-apple-system,"Segoe UI",Roboto,sans-serif;background:var(--bg);color:var(--text);
+  display:flex;flex-direction:column;min-height:100vh;padding:22px 18px 40px;max-width:760px;margin:0 auto}
+header{text-align:center;margin-bottom:14px}
+header h1{font-size:22px;margin:0 0 4px}
+header p{font-size:14px;color:var(--muted);margin:0}
+.bar{display:flex;gap:10px;margin:14px 0 10px}
+.langs{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px;gap:4px}
+.langs button{flex:1;border:none;background:transparent;color:var(--muted);font-size:15px;font-weight:700;
+  padding:10px 16px;border-radius:9px;cursor:pointer}
+.langs button.on{background:linear-gradient(135deg,var(--cyan),var(--violet));color:var(--ink)}
+select{flex:1;background:var(--surface);color:var(--text);border:1px solid var(--border);border-radius:12px;
+  padding:12px 14px;font-size:15px;font-family:inherit;-webkit-appearance:none;appearance:none;cursor:pointer}
+.controls{display:flex;gap:12px;margin:12px 0 16px}
+.controls button{flex:1;border-radius:18px;font-size:19px;font-weight:700;padding:26px 8px;cursor:pointer;
+  font-family:inherit;border:1px solid transparent;background:var(--surface);color:var(--text)}
+#play{flex:1.6;border:none;color:var(--ink);
+  background:linear-gradient(135deg,var(--cyan),var(--violet));
+  box-shadow:0 0 22px rgba(62,233,240,.28), 0 0 34px rgba(168,85,247,.22)}
+#pause{border-color:var(--violet);color:#cfa8ff}
+#stop{border-color:var(--magenta);color:#f0a2ff}
+.big{font-size:23px}
+.status{text-align:center;font-size:14px;color:var(--muted);margin-bottom:14px;min-height:18px}
+.script{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px 18px 8px;
+  font-size:17px;line-height:1.6}
+.script p{margin:0 0 14px;transition:color .2s}
+.script p.lead{color:var(--cyan);font-weight:600}
+.script p.speaking{background:var(--surface2);border-radius:8px;box-shadow:0 0 0 8px var(--surface2),inset 0 0 0 1px rgba(168,85,247,.35)}
+.sources{margin-top:16px;padding-top:14px;border-top:1px solid var(--border);font-size:13px;color:var(--muted)}
+.sources a{color:var(--link);word-break:break-word}
+.hint{text-align:center;font-size:12px;color:var(--faint);margin-top:20px}
+</style></head>
 <body>
-<header><h1>🎧 AI Briefing</h1><p id="weekstamp">03 July 2026</p></header>
-<div class="controls"><button id="play" class="big">▶ Play</button><button id="pause">⏸ Pause</button><button id="stop">⏹ Stop</button></div>
-<div class="status" id="status">Tap Play to listen</div>
-<div class="script" id="script">
-<p class="lead" data-speak="Good morning Ton, here is your Monday A I briefing. Big theme this week: agentic A I moved from chat window into an actual coworker, one that creates documents and runs actions on its own.">Good morning Ton, here is your Monday AI briefing. Big theme this week: agentic AI moved from chat window into an actual coworker, one that creates documents and runs actions on its own.</p>
-<p data-speak="For our Data Engineers, B I Consultants and Business Analysts: Microsoft rolled out Agent Skills for Power B I, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own B I Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and A I Summit, a data-smart A I coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through M C P tools, like updating a Jira ticket on its own.">For our Data Engineers, BI Consultants and Business Analysts: Microsoft rolled out Agent Skills for Power BI, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own BI Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and AI Summit, a data-smart AI coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through MCP tools, like updating a Jira ticket on its own.</p>
-<p data-speak="On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two point five billion dollar unit with six thousand people whose only job is deploying enterprise A I for clients. That's basically what our A I-driven fixed-price ambition is racing against. New engineering benchmarks also show lower-performing teams cut their lead time to value nearly in half once they properly adopted A I, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps.">On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two point five billion dollar unit with six thousand people whose only job is deploying enterprise AI for clients. That's basically what our AI-driven fixed-price ambition is racing against. New engineering benchmarks also show lower-performing teams cut their lead time to value nearly in half once they properly adopted AI, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps.</p>
-<p data-speak="Anthropic also shipped Claude Sonnet 5 this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork.">Anthropic also shipped Claude Sonnet 5 this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork.</p>
-<p data-speak="My pick for this week's session: demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an A I coworker actually does beyond chat, and that's exactly the story we're trying to tell.">My pick for this week's session: demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an AI coworker actually does beyond chat, and that's exactly the story we're trying to tell.</p>
-<div class="sources">Sources: <a href="https://releasebot.io/updates/microsoft/power-bi">Power BI Agent Skills</a> · <a href="https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq">Looker BI Agents</a> · <a href="https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/">Databricks Genie One</a> · <a href="https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/">Microsoft Frontier Company</a> · <a href="https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery">2026 Engineering Productivity Benchmarks</a> · <a href="https://simonwillison.net/2026/Jun/30/claude-sonnet-5/">Claude Sonnet 5</a></div>
+<header><h1>&#127911; AI Briefing</h1><p id="weekstamp"></p></header>
+
+<div class="bar">
+  <div class="langs">
+    <button id="nl" class="on" type="button">NL</button>
+    <button id="en" type="button">EN</button>
+  </div>
+  <select id="edition" aria-label="Editie"></select>
 </div>
-<p class="hint">Add to Home Screen for one-tap access. Plays through your car's Bluetooth.</p>
+
+<div class="controls">
+  <button id="play" class="big" type="button">&#9654; Play</button>
+  <button id="pause" type="button">&#9208; Pause</button>
+  <button id="stop" type="button">&#9209; Stop</button>
+</div>
+<div class="status" id="status"></div>
+<div class="script" id="script"></div>
+<p class="hint" id="hint"></p>
+
+<script id="data" type="application/json">
+{
+  "briefings": [
+    {
+      "date": "2026-07-26",
+      "label": { "en": "26 July 2026", "nl": "26 juli 2026" },
+      "summary": { "en": "Genie gets memory, Cowork learns by watching", "nl": "Genie krijgt geheugen, Cowork leert door te kijken" },
+      "en": {
+        "paras": [
+          {
+            "t": "Good morning Ton, here is your Monday AI briefing. The theme this week: the assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper.",
+            "s": "Good morning Ton, here is your Monday A I briefing. The theme this week. The assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper."
+          },
+          {
+            "t": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone: Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget.",
+            "s": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone. Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget."
+          },
+          {
+            "t": "On delivery, Info-Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from AI, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome.",
+            "s": "On delivery, Info Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from A I, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome."
+          },
+          {
+            "t": "Also worth knowing, the price floor moved again. Google shipped Gemini 3.6 Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. DeepSeek V4 went stable on the twenty fourth, and Kimi K3 releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome.",
+            "s": "Also worth knowing, the price floor moved again. Google shipped Gemini three point six Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. Deep Seek V four went stable on the twenty fourth, and Kimi K three releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome."
+          },
+          {
+            "t": "My pick for this week's session: the new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week.",
+            "s": "My pick for this week's session. The new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week."
+          }
+        ],
+        "sources": [
+          { "t": "Databricks AI/BI and Genie release notes 2026", "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026" },
+          { "t": "Info-Tech AI in Software Development study", "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html" },
+          { "t": "Google ships Gemini 3.6 Flash", "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/" },
+          { "t": "AI News, 22 July 2026 (Cowork skills, open weights)", "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" }
+        ]
+      },
+      "nl": {
+        "paras": [
+          {
+            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het thema van deze week: de assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper.",
+            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het thema van deze week. De assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper."
+          },
+          {
+            "t": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen: Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken.",
+            "s": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen. Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken."
+          },
+          {
+            "t": "Over delivery. Info-Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door AI, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed-price werk zit precies daar het risico. De snelheid is echt, de review- en securitypraktijk is nog niet mee, en wij dragen het resultaat.",
+            "s": "Over delivery. Info Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door A I, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed price werk zit precies daar het risico. De snelheid is echt, de review en security praktijk is nog niet mee, en wij dragen het resultaat."
+          },
+          {
+            "t": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini 3.6 Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. DeepSeek V4 werd stabiel op vierentwintig juli, en Kimi K3 geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed-price resultaat draagt.",
+            "s": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini drie punt zes Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. Deep Seek V vier werd stabiel op vierentwintig juli, en Kimi K drie geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed price resultaat draagt."
+          },
+          {
+            "t": "Mijn tip voor de sessie van deze week: de nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week.",
+            "s": "Mijn tip voor de sessie van deze week. De nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week."
+          }
+        ],
+        "sources": [
+          { "t": "Databricks AI/BI en Genie release notes 2026", "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026" },
+          { "t": "Info-Tech onderzoek AI in softwareontwikkeling", "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html" },
+          { "t": "Google brengt Gemini 3.6 Flash uit", "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/" },
+          { "t": "AI Nieuws, 22 juli 2026 (Cowork skills, open weights)", "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026" }
+        ]
+      }
+    },
+    {
+      "date": "2026-07-03",
+      "label": { "en": "3 July 2026", "nl": "3 juli 2026" },
+      "summary": { "en": "Agentic AI becomes an actual coworker", "nl": "Agentic AI wordt een echte collega" },
+      "en": {
+        "paras": [
+          {
+            "t": "Good morning Ton, here is your Monday AI briefing. Big theme this week: agentic AI moved from chat window into an actual coworker, one that creates documents and runs actions on its own.",
+            "s": "Good morning Ton, here is your Monday A I briefing. Big theme this week. Agentic A I moved from chat window into an actual coworker, one that creates documents and runs actions on its own."
+          },
+          {
+            "t": "For our Data Engineers, BI Consultants and Business Analysts: Microsoft rolled out Agent Skills for Power BI, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own BI Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and AI Summit, a data smart AI coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through MCP tools, like updating a Jira ticket on its own.",
+            "s": "For our Data Engineers, B I Consultants and Business Analysts. Microsoft rolled out Agent Skills for Power B I, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own B I Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and A I Summit, a data smart A I coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through M C P tools, like updating a Jira ticket on its own."
+          },
+          {
+            "t": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise AI for clients. That is basically what our AI driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted AI, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps.",
+            "s": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise A I for clients. That is basically what our A I driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted A I, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps."
+          },
+          {
+            "t": "Anthropic also shipped Claude Sonnet 5 this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork.",
+            "s": "Anthropic also shipped Claude Sonnet five this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork."
+          },
+          {
+            "t": "My pick for this week's session: demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an AI coworker actually does beyond chat, and that is exactly the story we're trying to tell.",
+            "s": "My pick for this week's session. Demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an A I coworker actually does beyond chat, and that is exactly the story we're trying to tell."
+          }
+        ],
+        "sources": [
+          { "t": "Power BI Agent Skills", "u": "https://releasebot.io/updates/microsoft/power-bi" },
+          { "t": "Looker BI Agents", "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq" },
+          { "t": "Databricks Genie One", "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/" },
+          { "t": "Microsoft Frontier Company", "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/" },
+          { "t": "2026 Engineering Productivity Benchmarks", "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery" },
+          { "t": "Claude Sonnet 5", "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/" }
+        ]
+      },
+      "nl": {
+        "paras": [
+          {
+            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week: agentic AI is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert.",
+            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week. Agentic A I is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert."
+          },
+          {
+            "t": "Voor onze Data Engineers, BI Consultants en Business Analisten: Microsoft heeft Agent Skills voor Power BI uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen BI Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and AI Summit, een datavaardige AI collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via MCP tools, zoals zelf een Jira ticket bijwerken.",
+            "s": "Voor onze Data Engineers, B I Consultants en Business Analisten. Microsoft heeft Agent Skills voor Power B I uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen B I Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and A I Summit, een datavaardige A I collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via M C P tools, zoals zelf een Jira ticket bijwerken."
+          },
+          {
+            "t": "Dan de delivery- en consultingkant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise AI bij klanten uitrolt. Dat is in feite waar onze AI-gedreven fixed-price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze AI echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten.",
+            "s": "Dan de delivery en consulting kant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise A I bij klanten uitrolt. Dat is in feite waar onze A I gedreven fixed price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze A I echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten."
+          },
+          {
+            "t": "Anthropic bracht deze maandag ook Claude Sonnet 5 uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork.",
+            "s": "Anthropic bracht deze maandag ook Claude Sonnet vijf uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork."
+          },
+          {
+            "t": "Mijn tip voor de sessie van deze week: demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een AI collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen.",
+            "s": "Mijn tip voor de sessie van deze week. Demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een A I collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen."
+          }
+        ],
+        "sources": [
+          { "t": "Power BI Agent Skills", "u": "https://releasebot.io/updates/microsoft/power-bi" },
+          { "t": "Looker BI Agents", "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq" },
+          { "t": "Databricks Genie One", "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/" },
+          { "t": "Microsoft Frontier Company", "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/" },
+          { "t": "2026 Engineering Productivity Benchmarks", "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery" },
+          { "t": "Claude Sonnet 5", "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/" }
+        ]
+      }
+    },
+    {
+      "date": "2026-06-11",
+      "label": { "en": "11 June 2026", "nl": "11 juni 2026" },
+      "summary": { "en": "Data tools quietly becoming agents", "nl": "Datatools worden stilletjes agents" },
+      "en": {
+        "paras": [
+          {
+            "t": "Good morning Ton, here is your Monday AI briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours.",
+            "s": "Good morning Ton, here is your Monday A I briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours."
+          },
+          {
+            "t": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your BI people, you can now drop a Tableau or Power BI file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power BI and Fabric update, including Fabric Apps, an AI first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions.",
+            "s": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your B I people, you can now drop a Tableau or Power B I file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power B I and Fabric update, including Fabric Apps, an A I first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions."
+          },
+          {
+            "t": "Now the delivery and consulting angle, which is right in your lane. A fresh 2026 consulting review made a sharp point. AI already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price AI delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams.",
+            "s": "Now the delivery and consulting angle, which is right in your lane. A fresh twenty twenty six consulting review made a sharp point. A I already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price A I delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams."
+          },
+          {
+            "t": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session.",
+            "s": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session."
+          },
+          {
+            "t": "My recommendation. Demo the Databricks Genie trick of importing a Power BI file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week.",
+            "s": "My recommendation. Demo the Databricks Genie trick of importing a Power B I file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week."
+          }
+        ],
+        "sources": [
+          { "t": "Databricks AI/BI and Genie release notes 2026", "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026" },
+          { "t": "Power BI June 2026 Feature Summary", "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264" },
+          { "t": "Future of Consulting: 2026 AI Revolution Update", "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/" },
+          { "t": "Alteryx Agent Studio at Inspire 2026", "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/" }
+        ]
+      },
+      "nl": {
+        "paras": [
+          {
+            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren.",
+            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren."
+          },
+          {
+            "t": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je BI mensen: je kunt nu een Tableau of Power BI bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power BI en Fabric uit, inclusief Fabric Apps, een AI-first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden.",
+            "s": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je B I mensen. Je kunt nu een Tableau of Power B I bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power B I en Fabric uit, inclusief Fabric Apps, een A I first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden."
+          },
+          {
+            "t": "Dan de delivery- en consultinghoek, en die ligt precies in jouw straatje. Een recent consultingoverzicht van 2026 maakte een scherp punt. AI maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed-price AI deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen.",
+            "s": "Dan de delivery en consulting hoek, en die ligt precies in jouw straatje. Een recent consulting overzicht van twintig zesentwintig maakte een scherp punt. A I maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed price A I deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen."
+          },
+          {
+            "t": "En iets wat een collega echt kan demonstreren: Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie.",
+            "s": "En iets wat een collega echt kan demonstreren. Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie."
+          },
+          {
+            "t": "Mijn aanbeveling. Demo de Databricks Genie truc: importeer een Power BI bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week.",
+            "s": "Mijn aanbeveling. Demo de Databricks Genie truc. Importeer een Power B I bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week."
+          }
+        ],
+        "sources": [
+          { "t": "Databricks AI/BI en Genie release notes 2026", "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026" },
+          { "t": "Power BI juni 2026 Feature Summary", "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264" },
+          { "t": "Future of Consulting: 2026 AI Revolution Update", "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/" },
+          { "t": "Alteryx Agent Studio op Inspire 2026", "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/" }
+        ]
+      }
+    }
+  ]
+}
+</script>
 <script>
-(function(){var synth=window.speechSynthesis;var playBtn=document.getElementById('play');var pauseBtn=document.getElementById('pause');var stopBtn=document.getElementById('stop');var status=document.getElementById('status');var parts=[].slice.call(document.querySelectorAll('[data-speak]')).map(function(el){return el.getAttribute('data-speak')});var fullText=parts.join(' ');var chosenVoice=null;function pickVoice(){var voices=synth.getVoices()||[];chosenVoice=voices.find(function(v){return /en[-_]GB/i.test(v.lang)&&/google|natural|premium/i.test(v.name)})||voices.find(function(v){return /en[-_]US/i.test(v.lang)&&/google|natural|premium/i.test(v.name)})||voices.find(function(v){return /^en/i.test(v.lang)})||voices[0]||null}pickVoice();if(synth.onvoiceschanged!==undefined)synth.onvoiceschanged=pickVoice;var paused=false;function speak(){if(!('speechSynthesis' in window)){status.textContent='Sorry, this browser has no built-in voice.';return}synth.cancel();var u=new SpeechSynthesisUtterance(fullText);if(chosenVoice)u.voice=chosenVoice;u.rate=1.0;u.pitch=1.0;u.lang=chosenVoice?chosenVoice.lang:'en-GB';u.onstart=function(){status.textContent='▶ Playing…';playBtn.textContent='▶ Playing'};u.onend=function(){status.textContent='Done. Have a good week.';playBtn.textContent='▶ Play';paused=false};u.onerror=function(){status.textContent='Playback stopped.';playBtn.textContent='▶ Play'};paused=false;synth.speak(u)}playBtn.addEventListener('click',function(){if(paused){synth.resume();paused=false;status.textContent='▶ Playing…';return}speak()});pauseBtn.addEventListener('click',function(){if(synth.speaking&&!paused){synth.pause();paused=true;status.textContent='⏸ Paused'}});stopBtn.addEventListener('click',function(){synth.cancel();paused=false;status.textContent='Stopped';playBtn.textContent='▶ Play'})})();
+(function(){
+var DATA = JSON.parse(document.getElementById('data').textContent).briefings;
+DATA.sort(function(a,b){return a.date < b.date ? 1 : -1;});
+
+var T = {
+  nl:{tap:"Tik op Play om te luisteren",playing:"▶ Aan het spelen…",paused:"⏸ Gepauzeerd",
+      stopped:"Gestopt",done:"Klaar. Fijne week.",novoice:"Deze browser heeft geen ingebouwde stem.",
+      play:"▶ Play",playingBtn:"▶ Speelt",sources:"Bronnen: ",
+      hint:"Zet op je beginscherm voor één tik toegang. Speelt via de Bluetooth van je auto."},
+  en:{tap:"Tap Play to listen",playing:"▶ Playing…",paused:"⏸ Paused",
+      stopped:"Stopped",done:"Done. Have a good week.",novoice:"This browser has no built-in voice.",
+      play:"▶ Play",playingBtn:"▶ Playing",sources:"Sources: ",
+      hint:"Add to Home Screen for one-tap access. Plays through your car's Bluetooth."}
+};
+
+var synth = window.speechSynthesis;
+var lang = 'nl', current = 0, paused = false;
+
+try{ var saved = localStorage.getItem('aibriefing-lang'); if(saved === 'nl' || saved === 'en') lang = saved; }catch(e){}
+
+var elScript=document.getElementById('script'), elStatus=document.getElementById('status'),
+    elStamp=document.getElementById('weekstamp'), elSel=document.getElementById('edition'),
+    elHint=document.getElementById('hint'), btnPlay=document.getElementById('play'),
+    btnPause=document.getElementById('pause'), btnStop=document.getElementById('stop'),
+    btnNL=document.getElementById('nl'), btnEN=document.getElementById('en');
+
+var voices=[];
+function loadVoices(){ voices = synth.getVoices() || []; }
+loadVoices();
+if(synth.onvoiceschanged !== undefined) synth.onvoiceschanged = loadVoices;
+
+function pickVoice(l){
+  if(!voices.length) loadVoices();
+  var want = l === 'nl' ? /^nl/i : /^en(-|_)?GB/i;
+  var fallback = l === 'nl' ? /^nl/i : /^en/i;
+  var good = /google|natural|premium|enhanced|neural/i;
+  return voices.filter(function(v){return want.test(v.lang) && good.test(v.name);})[0]
+      || voices.filter(function(v){return want.test(v.lang);})[0]
+      || voices.filter(function(v){return fallback.test(v.lang) && good.test(v.name);})[0]
+      || voices.filter(function(v){return fallback.test(v.lang);})[0]
+      || voices[0] || null;
+}
+
+function buildSelect(){
+  elSel.innerHTML = '';
+  DATA.forEach(function(b, i){
+    var o = document.createElement('option');
+    o.value = i; o.textContent = b.label[lang] + ' · ' + b.summary[lang];
+    elSel.appendChild(o);
+  });
+  elSel.value = current;
+}
+
+function render(){
+  var b = DATA[current], part = b[lang];
+  elStamp.textContent = b.label[lang];
+  document.documentElement.lang = lang;
+  elScript.innerHTML = '';
+  part.paras.forEach(function(p, i){
+    var el = document.createElement('p');
+    if(i === 0) el.className = 'lead';
+    el.textContent = p.t;
+    el.setAttribute('data-speak', p.s);
+    elScript.appendChild(el);
+  });
+  var src = document.createElement('div');
+  src.className = 'sources';
+  src.appendChild(document.createTextNode(T[lang].sources));
+  part.sources.forEach(function(s, i){
+    if(i) src.appendChild(document.createTextNode(' · '));
+    var a = document.createElement('a');
+    a.href = s.u; a.target = '_blank'; a.rel = 'noopener'; a.textContent = s.t;
+    src.appendChild(a);
+  });
+  elScript.appendChild(src);
+  elHint.textContent = T[lang].hint;
+  btnPlay.textContent = T[lang].play;
+  elStatus.textContent = T[lang].tap;
+  buildSelect();
+}
+
+function clearHighlight(){
+  [].forEach.call(elScript.querySelectorAll('p'), function(p){ p.classList.remove('speaking'); });
+}
+
+function speak(){
+  if(!('speechSynthesis' in window)){ elStatus.textContent = T[lang].novoice; return; }
+  synth.cancel(); clearHighlight();
+  var voice = pickVoice(lang);
+  var nodes = [].slice.call(elScript.querySelectorAll('[data-speak]'));
+  if(!nodes.length) return;
+  nodes.forEach(function(node, i){
+    var u = new SpeechSynthesisUtterance(node.getAttribute('data-speak'));
+    if(voice) u.voice = voice;
+    u.lang = voice ? voice.lang : (lang === 'nl' ? 'nl-NL' : 'en-GB');
+    u.rate = 1.0; u.pitch = 1.0;
+    u.onstart = function(){
+      clearHighlight(); node.classList.add('speaking');
+      elStatus.textContent = T[lang].playing; btnPlay.textContent = T[lang].playingBtn;
+    };
+    if(i === nodes.length - 1){
+      u.onend = function(){ clearHighlight(); elStatus.textContent = T[lang].done;
+        btnPlay.textContent = T[lang].play; paused = false; };
+    }
+    u.onerror = function(){ clearHighlight(); elStatus.textContent = T[lang].stopped;
+      btnPlay.textContent = T[lang].play; };
+    synth.speak(u);
+  });
+  paused = false;
+}
+
+function setLang(l){
+  if(l === lang) return;
+  lang = l;
+  try{ localStorage.setItem('aibriefing-lang', l); }catch(e){}
+  btnNL.className = l === 'nl' ? 'on' : '';
+  btnEN.className = l === 'en' ? 'on' : '';
+  synth.cancel(); paused = false;
+  render();
+}
+
+btnNL.addEventListener('click', function(){ setLang('nl'); });
+btnEN.addEventListener('click', function(){ setLang('en'); });
+elSel.addEventListener('change', function(){
+  current = parseInt(elSel.value, 10) || 0;
+  synth.cancel(); paused = false; render();
+});
+btnPlay.addEventListener('click', function(){
+  if(paused){ synth.resume(); paused = false; elStatus.textContent = T[lang].playing; return; }
+  speak();
+});
+btnPause.addEventListener('click', function(){
+  if(synth.speaking && !paused){ synth.pause(); paused = true; elStatus.textContent = T[lang].paused; }
+});
+btnStop.addEventListener('click', function(){
+  synth.cancel(); paused = false; clearHighlight();
+  elStatus.textContent = T[lang].stopped; btnPlay.textContent = T[lang].play;
+});
+window.addEventListener('beforeunload', function(){ synth.cancel(); });
+
+btnNL.className = lang === 'nl' ? 'on' : '';
+btnEN.className = lang === 'en' ? 'on' : '';
+render();
+})();
 </script></body></html>

@@ -4,8 +4,8 @@
   "description": "Your weekly spoken AI briefing, read aloud for the car.",
   "start_url": "./ai-briefing.html",
   "display": "standalone",
-  "background_color": "#0d1117",
-  "theme_color": "#0d1117",
+  "background_color": "#080d20",
+  "theme_color": "#080d20",
   "orientation": "portrait",
   "icons": [
     {
