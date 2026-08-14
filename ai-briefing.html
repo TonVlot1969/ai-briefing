@@ -80,499 +80,586 @@ select{flex:1;background:var(--surface);color:var(--text);border:1px solid var(-
 
 <script id="data" type="application/json">
 {
-  "briefings": [
-    {
-      "date": "2026-08-07",
-      "label": {
-        "en": "7 August 2026",
-        "nl": "7 augustus 2026"
-      },
-      "summary": {
-        "en": "Both lakehouses ship AI cost gateways",
-        "nl": "Beide lakehouses lanceren AI-kostengateways"
-      },
-      "en": {
-        "paras": [
-          {
-            "t": "Good morning Ton, here is your Monday AI briefing. Two rival data platforms shipped almost the same product within a week of each other, and that tells you exactly where the pain is right now.",
-            "s": "Good morning Ton, here is your Monday A I briefing. Two rival data platforms shipped almost the same product within a week of each other, and that tells you exactly where the pain is right now."
-          },
-          {
-            "t": "Start with the practical stuff for the teams. Databricks pushed a Genie One update on the sixth of August. The Genie Ontology is now on by default in public preview. That is a business context layer giving Genie a map of how your organisation actually names and defines things, and it is the difference between a text to SQL toy and something a Business Analyst will trust in front of a client. You can now also upload PDF files into a Genie One conversation, next to CSV and Excel. And on the third of August Databricks extended free usage of Genie One and Genie Agents all the way to the end of January 2027, so the budget excuse is gone.",
-            "s": "Start with the practical stuff for the teams. Databricks pushed a Genie One update on the sixth of August. The Genie Ontology is now on by default in public preview. That is a business context layer giving Genie a map of how your organisation actually names and defines things, and it is the difference between a text to S Q L toy and something a Business Analyst will trust in front of a client. You can now also upload P D F files into a Genie One conversation, next to C S V and Excel. And on the third of August Databricks extended free usage of Genie One and Genie Agents all the way to the end of January twenty twenty seven, so the budget excuse is gone."
-          },
-          {
-            "t": "Now delivery and consulting, and this is the one to pay attention to. Databricks made Unity AI Gateway generally available on the fourth of August. Snowflake launched Cortex AI Gateway at Black Hat a week earlier. Both do the same job: one control plane in front of every agent, model and MCP server, with hard spend caps, cost attribution per team and per user, and smart routing that sends simple tasks to cheap models. Databricks says over a quadrillion tokens passed through its gateway in the past year. Read that as a warning about scale. In a fixed price model, tokens are your margin, and you cannot defend a margin you cannot attribute.",
-            "s": "Now delivery and consulting, and this is the one to pay attention to. Databricks made Unity A I Gateway generally available on the fourth of August. Snowflake launched Cortex A I Gateway at Black Hat a week earlier. Both do the same job. One control plane in front of every agent, model and M C P server, with hard spend caps, cost attribution per team and per user, and smart routing that sends simple tasks to cheap models. Databricks says over a quadrillion tokens passed through its gateway in the past year. Read that as a warning about scale. In a fixed price model, tokens are your margin, and you cannot defend a margin you cannot attribute."
-          },
-          {
-            "t": "For something a colleague can demo in thirty minutes, GitHub shipped comment triggered Copilot automations on the third of August. You leave a comment on an issue or a pull request, and a cloud agent picks it up and does the work. Regenerate the documentation after a code change, dig through a stack trace on a bug ticket, or open follow up issues for technical debt. You configure the trigger phrase yourself in the Agents tab.",
-            "s": "For something a colleague can demo in thirty minutes, GitHub shipped comment triggered Copilot automations on the third of August. You leave a comment on an issue or a pull request, and a cloud agent picks it up and does the work. Regenerate the documentation after a code change, dig through a stack trace on a bug ticket, or open follow up issues for technical debt. You configure the trigger phrase yourself in the Agents tab."
-          },
-          {
-            "t": "That last one is my pick for this week's session. It takes ten minutes to set up, every team already has a repository, and watching an agent respond to a comment makes agentic delivery concrete instead of theoretical. Have a good week.",
-            "s": "That last one is my pick for this week's session. It takes ten minutes to set up, every team already has a repository, and watching an agent respond to a comment makes agentic delivery concrete instead of theoretical. Have a good week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI and Genie One release notes 2026",
-            "u": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Unity AI Gateway is Generally Available (Databricks, 4 Aug 2026)",
-            "u": "https://www.databricks.com/blog/unity-ai-gateway-generally-available"
-          },
-          {
-            "t": "Snowflake launches Cortex AI Gateway at Black Hat 2026",
-            "u": "https://www.snowflake.com/en/blog/enterprise-ai-security-agentic-mcp-governance/"
-          },
-          {
-            "t": "Trigger Copilot automations with comments (GitHub, 3 Aug 2026)",
-            "u": "https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/"
-          }
-        ]
-      },
-      "nl": {
-        "paras": [
-          {
-            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Twee concurrerende dataplatformen brachten binnen een week vrijwel hetzelfde product uit, en dat zegt precies waar de pijn nu zit.",
-            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Twee concurrerende dataplatformen brachten binnen een week vrijwel hetzelfde product uit, en dat zegt precies waar de pijn nu zit."
-          },
-          {
-            "t": "Eerst het praktische voor de teams. Databricks bracht op 6 augustus een Genie One update uit. De Genie Ontology staat nu standaard aan, in public preview. Dat is een laag met bedrijfscontext die Genie een kaart geeft van hoe jouw organisatie dingen echt noemt en definieert. Dat is het verschil tussen een tekst naar SQL speeltje en iets waar een Business Analist bij de klant op durft te leunen. Je kunt nu ook PDF bestanden uploaden in een Genie One gesprek, naast CSV en Excel. En op 3 augustus verlengde Databricks het gratis gebruik van Genie One en Genie Agents tot eind januari 2027, dus het budgetexcuus is weg.",
-            "s": "Eerst het praktische voor de teams. Databricks bracht op zes augustus een Genie One update uit. De Genie Ontology staat nu standaard aan, in public preview. Dat is een laag met bedrijfscontext die Genie een kaart geeft van hoe jouw organisatie dingen echt noemt en definieert. Dat is het verschil tussen een tekst naar S Q L speeltje en iets waar een Business Analist bij de klant op durft te leunen. Je kunt nu ook P D F bestanden uploaden in een Genie One gesprek, naast C S V en Excel. En op drie augustus verlengde Databricks het gratis gebruik van Genie One en Genie Agents tot eind januari tweeduizend zevenentwintig, dus het budgetexcuus is weg."
-          },
-          {
-            "t": "Dan delivery en consulting, en hier moet je echt even op letten. Databricks maakte Unity AI Gateway op 4 augustus algemeen beschikbaar. Snowflake lanceerde een week eerder Cortex AI Gateway op Black Hat. Beide doen hetzelfde werk: één controlelaag voor elke agent, elk model en elke MCP server, met harde uitgavenplafonds, kostentoerekening per team en per gebruiker, en slimme routering die eenvoudige taken naar goedkope modellen stuurt. Databricks zegt dat er het afgelopen jaar meer dan duizend biljoen tokens door hun gateway zijn gegaan. Lees dat als een waarschuwing over schaal. In een fixed price model zijn tokens je marge, en je kunt geen marge verdedigen die je niet kunt toerekenen.",
-            "s": "Dan delivery en consulting, en hier moet je echt even op letten. Databricks maakte Unity A I Gateway op vier augustus algemeen beschikbaar. Snowflake lanceerde een week eerder Cortex A I Gateway op Black Hat. Beide doen hetzelfde werk. Eén controlelaag voor elke agent, elk model en elke M C P server, met harde uitgavenplafonds, kostentoerekening per team en per gebruiker, en slimme routering die eenvoudige taken naar goedkope modellen stuurt. Databricks zegt dat er het afgelopen jaar meer dan duizend biljoen tokens door hun gateway zijn gegaan. Lees dat als een waarschuwing over schaal. In een fixed price model zijn tokens je marge, en je kunt geen marge verdedigen die je niet kunt toerekenen."
-          },
-          {
-            "t": "En iets wat een collega in dertig minuten kan demonstreren: GitHub bracht op 3 augustus Copilot automations uit die je met een comment start. Je zet een reactie onder een issue of een pull request, en een cloud agent pakt het op en gaat aan de slag. Documentatie bijwerken na een codewijziging, een stack trace uitpluizen bij een bug ticket, of vervolgissues aanmaken voor technische schuld. De triggerzin stel je zelf in op het Agents tabblad.",
-            "s": "En iets wat een collega in dertig minuten kan demonstreren. GitHub bracht op drie augustus Copilot automations uit die je met een comment start. Je zet een reactie onder een issue of een pull request, en een cloud agent pakt het op en gaat aan de slag. Documentatie bijwerken na een codewijziging, een stack trace uitpluizen bij een bug ticket, of vervolgissues aanmaken voor technische schuld. De triggerzin stel je zelf in op het Agents tabblad."
-          },
-          {
-            "t": "Die laatste is mijn tip voor de sessie van deze week. Het opzetten kost tien minuten, elk team heeft al een repository, en een agent zien reageren op een comment maakt agentic delivery concreet in plaats van theoretisch. Fijne week.",
-            "s": "Die laatste is mijn tip voor de sessie van deze week. Het opzetten kost tien minuten, elk team heeft al een repository, en een agent zien reageren op een comment maakt agentic delivery concreet in plaats van theoretisch. Fijne week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI en Genie One release notes 2026",
-            "u": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Unity AI Gateway algemeen beschikbaar (Databricks, 4 aug 2026)",
-            "u": "https://www.databricks.com/blog/unity-ai-gateway-generally-available"
-          },
-          {
-            "t": "Snowflake lanceert Cortex AI Gateway op Black Hat 2026",
-            "u": "https://www.snowflake.com/en/blog/enterprise-ai-security-agentic-mcp-governance/"
-          },
-          {
-            "t": "Copilot automations starten met een comment (GitHub, 3 aug 2026)",
-            "u": "https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-31",
-      "label": {
-        "en": "31 July 2026",
-        "nl": "31 juli 2026"
-      },
-      "summary": {
-        "en": "Genie reaches Teams, Power BI answers in Copilot",
-        "nl": "Genie komt in Teams, Power BI antwoordt in Copilot"
-      },
-      "en": {
-        "paras": [
-          {
-            "t": "Good morning Ton, here is your Monday AI briefing. Quiet week for flashy launches, busy week in the plumbing your teams actually work in.",
-            "s": "Good morning Ton, here is your Monday A I briefing. Quiet week for flashy launches, busy week in the plumbing your teams actually work in."
-          },
-          {
-            "t": "Start with the data work. Databricks shipped a run of Genie updates. Since the seventeenth there is a Genie app for Microsoft Teams in public preview, so a business analyst can ask a data question in a Teams chat and get an answer without opening a workspace. On the sixteenth the Lakebridge Agentic Converter went to beta. It takes legacy SQL, T-SQL, Oracle, Teradata, Redshift, BigQuery, and converts it to ANSI SQL. It checks syntax and intent, and fixes its own errors before writing the result. That is migration work that used to eat weeks. One warning: the free window for Genie One and Genie Agents ends today. From tomorrow it is pay as you go, so tell your teams before someone gets a surprise bill.",
-            "s": "Start with the data work. Databricks shipped a run of Genie updates. Since the seventeenth there is a Genie app for Microsoft Teams in public preview, so a business analyst can ask a data question in a Teams chat and get an answer without opening a workspace. On the sixteenth the Lakebridge Agentic Converter went to beta. It takes legacy S Q L, T S Q L, Oracle, Teradata, Redshift, BigQuery, and converts it to ANSI S Q L. It checks syntax and intent, and fixes its own errors before writing the result. That is migration work that used to eat weeks. One warning. The free window for Genie One and Genie Agents ends today. From tomorrow it is pay as you go, so tell your teams before someone gets a surprise bill."
-          },
-          {
-            "t": "On the Microsoft side, the Power BI team spelled out on the twenty first where Copilot is heading. Power BI data can now answer questions directly inside Microsoft 365 Copilot Chat, in preview, and the heavier multi step work moves to Copilot Cowork, which is billed per use instead of a flat license. The line that matters for us: the semantic model is the advantage. AI pointed at raw tables gives answers that look right. Your measures and definitions are what make them trustworthy.",
-            "s": "On the Microsoft side, the Power B I team spelled out on the twenty first where Copilot is heading. Power B I data can now answer questions directly inside Microsoft three sixty five Copilot Chat, in preview, and the heavier multi step work moves to Copilot Cowork, which is billed per use instead of a flat license. The line that matters for us. The semantic model is the advantage. A I pointed at raw tables gives answers that look right. Your measures and definitions are what make them trustworthy."
-          },
-          {
-            "t": "On models, Anthropic released Claude Opus 5 on the twenty fourth, best in class on coding and knowledge work at roughly half the price of Fable 5. Moonshot put the open weights of Kimi K3 out on the twenty seventh, the largest open model so far. Nothing landed this week that speaks directly to fixed price delivery, so I am skipping that theme.",
-            "s": "On models, Anthropic released Claude Opus five on the twenty fourth, best in class on coding and knowledge work at roughly half the price of Fable five. Moonshot put the open weights of Kimi K three out on the twenty seventh, the largest open model so far. Nothing landed this week that speaks directly to fixed price delivery, so I am skipping that theme."
-          },
-          {
-            "t": "My pick for this week's session: Power BI answering questions inside Microsoft 365 Copilot Chat. It is visual, it takes five minutes to show, and it makes the case that the semantic model work your BI consultants already do is exactly what makes AI trustworthy. Have a good week.",
-            "s": "My pick for this week's session. Power B I answering questions inside Microsoft three sixty five Copilot Chat. It is visual, it takes five minutes to show, and it makes the case that the semantic model work your B I consultants already do is exactly what makes A I trustworthy. Have a good week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Azure Databricks release notes, July 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/july"
-          },
-          {
-            "t": "Bringing Power BI Insights to Every Copilot User",
-            "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Bringing-Power-BI-Insights-to-Every-Copilot-User/ba-p/5309360"
-          },
-          {
-            "t": "Introducing Claude Opus 5",
-            "u": "https://www.anthropic.com/news/claude-opus-5"
-          },
-          {
-            "t": "Moonshot unveils Kimi K3, largest open-weight model",
-            "u": "https://www.axios.com/2026/07/16/moonshot-kimi-ai-china-model-openai-anthropic"
-          }
-        ]
-      },
-      "nl": {
-        "paras": [
-          {
-            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Rustige week qua grote lanceringen, drukke week in de leidingen waar je teams echt mee werken.",
-            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Rustige week qua grote lanceringen, drukke week in de leidingen waar je teams echt mee werken."
-          },
-          {
-            "t": "Eerst het datawerk. Databricks leverde een reeks Genie updates. Sinds zeventien juli is er een Genie app voor Microsoft Teams in public preview, zodat een business analist een datavraag in een Teams chat kan stellen en antwoord krijgt zonder een workspace te openen. Op zestien juli ging de Lakebridge Agentic Converter naar beta. Die pakt oude SQL, T-SQL, Oracle, Teradata, Redshift, BigQuery, en zet het om naar ANSI SQL. Hij controleert syntax en bedoeling, en repareert zijn eigen fouten voordat hij het resultaat wegschrijft. Dat is migratiewerk waar vroeger weken in gingen zitten. Eén waarschuwing: de gratis periode voor Genie One en Genie Agents stopt vandaag. Vanaf morgen is het pay as you go, dus zeg het je teams voordat iemand een onverwachte rekening krijgt.",
-            "s": "Eerst het datawerk. Databricks leverde een reeks Genie updates. Sinds zeventien juli is er een Genie app voor Microsoft Teams in public preview, zodat een business analist een datavraag in een Teams chat kan stellen en antwoord krijgt zonder een workspace te openen. Op zestien juli ging de Lakebridge Agentic Converter naar beta. Die pakt oude S Q L, T S Q L, Oracle, Teradata, Redshift, BigQuery, en zet het om naar ANSI S Q L. Hij controleert syntax en bedoeling, en repareert zijn eigen fouten voordat hij het resultaat wegschrijft. Dat is migratiewerk waar vroeger weken in gingen zitten. Eén waarschuwing. De gratis periode voor Genie One en Genie Agents stopt vandaag. Vanaf morgen is het pay as you go, dus zeg het je teams voordat iemand een onverwachte rekening krijgt."
-          },
-          {
-            "t": "Aan de Microsoft kant legde het Power BI team op eenentwintig juli uit waar Copilot heen gaat. Power BI data kan nu rechtstreeks vragen beantwoorden in Microsoft 365 Copilot Chat, in preview, en het zwaardere werk in meerdere stappen verhuist naar Copilot Cowork, dat per gebruik wordt afgerekend in plaats van een vaste licentie. De zin die er voor ons toe doet: het semantische model is je voorsprong. AI die je op ruwe tabellen loslaat geeft antwoorden die er goed uitzien. Jouw measures en definities maken ze pas betrouwbaar.",
-            "s": "Aan de Microsoft kant legde het Power B I team op eenentwintig juli uit waar Copilot heen gaat. Power B I data kan nu rechtstreeks vragen beantwoorden in Microsoft drie zes vijf Copilot Chat, in preview, en het zwaardere werk in meerdere stappen verhuist naar Copilot Cowork, dat per gebruik wordt afgerekend in plaats van een vaste licentie. De zin die er voor ons toe doet. Het semantische model is je voorsprong. A I die je op ruwe tabellen loslaat geeft antwoorden die er goed uitzien. Jouw measures en definities maken ze pas betrouwbaar."
-          },
-          {
-            "t": "Qua modellen bracht Anthropic op vierentwintig juli Claude Opus 5 uit, de beste in coding en kenniswerk voor ongeveer de helft van de prijs van Fable 5. Moonshot zette op zevenentwintig juli de open weights van Kimi K3 online, het grootste open model tot nu toe. Over fixed price delivery was er deze week niets, dus dat thema sla ik over.",
-            "s": "Qua modellen bracht Anthropic op vierentwintig juli Claude Opus vijf uit, de beste in coding en kenniswerk voor ongeveer de helft van de prijs van Fable vijf. Moonshot zette op zevenentwintig juli de open weights van Kimi K drie online, het grootste open model tot nu toe. Over fixed price delivery was er deze week niets, dus dat thema sla ik over."
-          },
-          {
-            "t": "Mijn tip voor de sessie van deze week: Power BI dat vragen beantwoordt in Microsoft 365 Copilot Chat. Het is visueel, je laat het in vijf minuten zien, en het maakt het punt dat het semantische modelwerk dat je BI consultants al doen precies is wat AI betrouwbaar maakt. Fijne week.",
-            "s": "Mijn tip voor de sessie van deze week. Power B I dat vragen beantwoordt in Microsoft drie zes vijf Copilot Chat. Het is visueel, je laat het in vijf minuten zien, en het maakt het punt dat het semantische modelwerk dat je B I consultants al doen precies is wat A I betrouwbaar maakt. Fijne week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Azure Databricks release notes, juli 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/july"
-          },
-          {
-            "t": "Power BI inzichten voor elke Copilot gebruiker",
-            "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Bringing-Power-BI-Insights-to-Every-Copilot-User/ba-p/5309360"
-          },
-          {
-            "t": "Introducing Claude Opus 5",
-            "u": "https://www.anthropic.com/news/claude-opus-5"
-          },
-          {
-            "t": "Moonshot onthult Kimi K3, grootste open-weight model",
-            "u": "https://www.axios.com/2026/07/16/moonshot-kimi-ai-china-model-openai-anthropic"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-26",
-      "label": {
-        "en": "26 July 2026",
-        "nl": "26 juli 2026"
-      },
-      "summary": {
-        "en": "Genie gets memory, Cowork learns by watching",
-        "nl": "Genie krijgt geheugen, Cowork leert door te kijken"
-      },
-      "en": {
-        "paras": [
-          {
-            "t": "Good morning Ton, here is your Monday AI briefing. The theme this week: the assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper.",
-            "s": "Good morning Ton, here is your Monday A I briefing. The theme this week. The assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper."
-          },
-          {
-            "t": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone: Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget.",
-            "s": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone. Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget."
-          },
-          {
-            "t": "On delivery, Info-Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from AI, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome.",
-            "s": "On delivery, Info Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from A I, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome."
-          },
-          {
-            "t": "Also worth knowing, the price floor moved again. Google shipped Gemini 3.6 Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. DeepSeek V4 went stable on the twenty fourth, and Kimi K3 releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome.",
-            "s": "Also worth knowing, the price floor moved again. Google shipped Gemini three point six Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. Deep Seek V four went stable on the twenty fourth, and Kimi K three releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome."
-          },
-          {
-            "t": "My pick for this week's session: the new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week.",
-            "s": "My pick for this week's session. The new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI and Genie release notes 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Info-Tech AI in Software Development study",
-            "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html"
-          },
-          {
-            "t": "Google ships Gemini 3.6 Flash",
-            "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/"
-          },
-          {
-            "t": "AI News, 22 July 2026 (Cowork skills, open weights)",
-            "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026"
-          }
-        ]
-      },
-      "nl": {
-        "paras": [
-          {
-            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het thema van deze week: de assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper.",
-            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het thema van deze week. De assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper."
-          },
-          {
-            "t": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen: Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken.",
-            "s": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen. Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken."
-          },
-          {
-            "t": "Over delivery. Info-Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door AI, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed-price werk zit precies daar het risico. De snelheid is echt, de review- en securitypraktijk is nog niet mee, en wij dragen het resultaat.",
-            "s": "Over delivery. Info Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door A I, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed price werk zit precies daar het risico. De snelheid is echt, de review en security praktijk is nog niet mee, en wij dragen het resultaat."
-          },
-          {
-            "t": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini 3.6 Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. DeepSeek V4 werd stabiel op vierentwintig juli, en Kimi K3 geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed-price resultaat draagt.",
-            "s": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini drie punt zes Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. Deep Seek V vier werd stabiel op vierentwintig juli, en Kimi K drie geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed price resultaat draagt."
-          },
-          {
-            "t": "Mijn tip voor de sessie van deze week: de nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week.",
-            "s": "Mijn tip voor de sessie van deze week. De nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI en Genie release notes 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Info-Tech onderzoek AI in softwareontwikkeling",
-            "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html"
-          },
-          {
-            "t": "Google brengt Gemini 3.6 Flash uit",
-            "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/"
-          },
-          {
-            "t": "AI Nieuws, 22 juli 2026 (Cowork skills, open weights)",
-            "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-07-03",
-      "label": {
-        "en": "3 July 2026",
-        "nl": "3 juli 2026"
-      },
-      "summary": {
-        "en": "Agentic AI becomes an actual coworker",
-        "nl": "Agentic AI wordt een echte collega"
-      },
-      "en": {
-        "paras": [
-          {
-            "t": "Good morning Ton, here is your Monday AI briefing. Big theme this week: agentic AI moved from chat window into an actual coworker, one that creates documents and runs actions on its own.",
-            "s": "Good morning Ton, here is your Monday A I briefing. Big theme this week. Agentic A I moved from chat window into an actual coworker, one that creates documents and runs actions on its own."
-          },
-          {
-            "t": "For our Data Engineers, BI Consultants and Business Analysts: Microsoft rolled out Agent Skills for Power BI, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own BI Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and AI Summit, a data smart AI coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through MCP tools, like updating a Jira ticket on its own.",
-            "s": "For our Data Engineers, B I Consultants and Business Analysts. Microsoft rolled out Agent Skills for Power B I, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own B I Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and A I Summit, a data smart A I coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through M C P tools, like updating a Jira ticket on its own."
-          },
-          {
-            "t": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise AI for clients. That is basically what our AI driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted AI, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps.",
-            "s": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise A I for clients. That is basically what our A I driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted A I, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps."
-          },
-          {
-            "t": "Anthropic also shipped Claude Sonnet 5 this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork.",
-            "s": "Anthropic also shipped Claude Sonnet five this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork."
-          },
-          {
-            "t": "My pick for this week's session: demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an AI coworker actually does beyond chat, and that is exactly the story we're trying to tell.",
-            "s": "My pick for this week's session. Demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an A I coworker actually does beyond chat, and that is exactly the story we're trying to tell."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Power BI Agent Skills",
-            "u": "https://releasebot.io/updates/microsoft/power-bi"
-          },
-          {
-            "t": "Looker BI Agents",
-            "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq"
-          },
-          {
-            "t": "Databricks Genie One",
-            "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/"
-          },
-          {
-            "t": "Microsoft Frontier Company",
-            "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/"
-          },
-          {
-            "t": "2026 Engineering Productivity Benchmarks",
-            "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery"
-          },
-          {
-            "t": "Claude Sonnet 5",
-            "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/"
-          }
-        ]
-      },
-      "nl": {
-        "paras": [
-          {
-            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week: agentic AI is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert.",
-            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week. Agentic A I is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert."
-          },
-          {
-            "t": "Voor onze Data Engineers, BI Consultants en Business Analisten: Microsoft heeft Agent Skills voor Power BI uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen BI Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and AI Summit, een datavaardige AI collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via MCP tools, zoals zelf een Jira ticket bijwerken.",
-            "s": "Voor onze Data Engineers, B I Consultants en Business Analisten. Microsoft heeft Agent Skills voor Power B I uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen B I Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and A I Summit, een datavaardige A I collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via M C P tools, zoals zelf een Jira ticket bijwerken."
-          },
-          {
-            "t": "Dan de delivery- en consultingkant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise AI bij klanten uitrolt. Dat is in feite waar onze AI-gedreven fixed-price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze AI echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten.",
-            "s": "Dan de delivery en consulting kant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise A I bij klanten uitrolt. Dat is in feite waar onze A I gedreven fixed price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze A I echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten."
-          },
-          {
-            "t": "Anthropic bracht deze maandag ook Claude Sonnet 5 uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork.",
-            "s": "Anthropic bracht deze maandag ook Claude Sonnet vijf uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork."
-          },
-          {
-            "t": "Mijn tip voor de sessie van deze week: demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een AI collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen.",
-            "s": "Mijn tip voor de sessie van deze week. Demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een A I collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Power BI Agent Skills",
-            "u": "https://releasebot.io/updates/microsoft/power-bi"
-          },
-          {
-            "t": "Looker BI Agents",
-            "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq"
-          },
-          {
-            "t": "Databricks Genie One",
-            "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/"
-          },
-          {
-            "t": "Microsoft Frontier Company",
-            "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/"
-          },
-          {
-            "t": "2026 Engineering Productivity Benchmarks",
-            "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery"
-          },
-          {
-            "t": "Claude Sonnet 5",
-            "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/"
-          }
-        ]
-      }
-    },
-    {
-      "date": "2026-06-11",
-      "label": {
-        "en": "11 June 2026",
-        "nl": "11 juni 2026"
-      },
-      "summary": {
-        "en": "Data tools quietly becoming agents",
-        "nl": "Datatools worden stilletjes agents"
-      },
-      "en": {
-        "paras": [
-          {
-            "t": "Good morning Ton, here is your Monday AI briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours.",
-            "s": "Good morning Ton, here is your Monday A I briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours."
-          },
-          {
-            "t": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your BI people, you can now drop a Tableau or Power BI file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power BI and Fabric update, including Fabric Apps, an AI first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions.",
-            "s": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your B I people, you can now drop a Tableau or Power B I file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power B I and Fabric update, including Fabric Apps, an A I first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions."
-          },
-          {
-            "t": "Now the delivery and consulting angle, which is right in your lane. A fresh 2026 consulting review made a sharp point. AI already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price AI delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams.",
-            "s": "Now the delivery and consulting angle, which is right in your lane. A fresh twenty twenty six consulting review made a sharp point. A I already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price A I delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams."
-          },
-          {
-            "t": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session.",
-            "s": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session."
-          },
-          {
-            "t": "My recommendation. Demo the Databricks Genie trick of importing a Power BI file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week.",
-            "s": "My recommendation. Demo the Databricks Genie trick of importing a Power B I file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI and Genie release notes 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Power BI June 2026 Feature Summary",
-            "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264"
-          },
-          {
-            "t": "Future of Consulting: 2026 AI Revolution Update",
-            "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/"
-          },
-          {
-            "t": "Alteryx Agent Studio at Inspire 2026",
-            "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/"
-          }
-        ]
-      },
-      "nl": {
-        "paras": [
-          {
-            "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren.",
-            "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren."
-          },
-          {
-            "t": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je BI mensen: je kunt nu een Tableau of Power BI bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power BI en Fabric uit, inclusief Fabric Apps, een AI-first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden.",
-            "s": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je B I mensen. Je kunt nu een Tableau of Power B I bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power B I en Fabric uit, inclusief Fabric Apps, een A I first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden."
-          },
-          {
-            "t": "Dan de delivery- en consultinghoek, en die ligt precies in jouw straatje. Een recent consultingoverzicht van 2026 maakte een scherp punt. AI maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed-price AI deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen.",
-            "s": "Dan de delivery en consulting hoek, en die ligt precies in jouw straatje. Een recent consulting overzicht van twintig zesentwintig maakte een scherp punt. A I maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed price A I deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen."
-          },
-          {
-            "t": "En iets wat een collega echt kan demonstreren: Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie.",
-            "s": "En iets wat een collega echt kan demonstreren. Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie."
-          },
-          {
-            "t": "Mijn aanbeveling. Demo de Databricks Genie truc: importeer een Power BI bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week.",
-            "s": "Mijn aanbeveling. Demo de Databricks Genie truc. Importeer een Power B I bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week."
-          }
-        ],
-        "sources": [
-          {
-            "t": "Databricks AI/BI en Genie release notes 2026",
-            "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
-          },
-          {
-            "t": "Power BI juni 2026 Feature Summary",
-            "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264"
-          },
-          {
-            "t": "Future of Consulting: 2026 AI Revolution Update",
-            "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/"
-          },
-          {
-            "t": "Alteryx Agent Studio op Inspire 2026",
-            "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/"
-          }
-        ]
-      }
-    }
-  ]
+ "briefings": [
+  {
+   "date": "2026-08-14",
+   "label": {
+    "en": "14 August 2026",
+    "nl": "14 augustus 2026"
+   },
+   "summary": {
+    "en": "Cost dashboards and portable agent plugins",
+    "nl": "Kostendashboards en draagbare agent plugins"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. Nobody shipped a flashy new model this week. They shipped plumbing, and it is about cost and portability. On the seventh of August Snowflake made Cortex Agents and MCP servers in Native Apps generally available. A provider can now ship an app with a conversational agent on top of the data it shares, plus a Snowflake managed MCP server that exposes Cortex Search services, semantic views and stored procedures as tools any agent can call. For a BI Consultant that is the interesting bit. Your semantic layer stops being something people look at and becomes something an agent calls. Databricks has been quiet since the sixth and there is no Power BI August summary yet, so Microsoft is quiet too.",
+      "s": "Good morning Ton, here is your Monday A I briefing. Nobody shipped a flashy new model this week. They shipped plumbing, and it is about cost and portability. On the seventh of August Snowflake made Cortex Agents and M C P servers in Native Apps generally available. A provider can now ship an app with a conversational agent on top of the data it shares, plus a Snowflake managed M C P server that exposes Cortex Search services, semantic views and stored procedures as tools any agent can call. For a B I Consultant that is the interesting bit. Your semantic layer stops being something people look at and becomes something an agent calls. Databricks has been quiet since the sixth and there is no Power B I August summary yet, so Microsoft is quiet too."
+     },
+     {
+      "t": "Now delivery, and this one is for you. On the seventh of August GitHub added a Potential return on investment section to the Copilot impact dashboard. It puts two groups side by side. Developers who mostly use chat and completions, against agent first developers. For each it shows cost per developer per month from real credit consumption, that cost as a share of payroll, and pull requests per developer per month. There is a salary selector so you can model your own numbers. On the eleventh the usage report also got a per model token breakdown. Spend and output finally sit on the same screen. In a fixed price model that is the number you need, though GitHub calls the figures directional, so treat them as a baseline.",
+      "s": "Now delivery, and this one is for you. On the seventh of August GitHub added a Potential return on investment section to the Copilot impact dashboard. It puts two groups side by side. Developers who mostly use chat and completions, against agent first developers. For each it shows cost per developer per month from real credit consumption, that cost as a share of payroll, and pull requests per developer per month. There is a salary selector so you can model your own numbers. On the eleventh the usage report also got a per model token breakdown. Spend and output finally sit on the same screen. In a fixed price model that is the number you need, though GitHub calls the figures directional, so treat them as a baseline."
+     },
+     {
+      "t": "To demo, GitHub published Agent Plugins 1.0 on the sixth of August with AWS, Microsoft, OpenAI, Vercel and Anysphere, and Google joined the same day. Support went generally available on the twelfth in VS Code, Copilot CLI, the Copilot SDK and the Copilot app. One package bundles a skill and an MCP server, and that same package runs across all of them.",
+      "s": "To demo, GitHub published Agent Plugins one point zero on the sixth of August with AWS, Microsoft, Open A I, Vercel and Anysphere, and Google joined the same day. Support went generally available on the twelfth in VS Code, Copilot C L I, the Copilot S D K and the Copilot app. One package bundles a skill and an M C P server, and that same package runs across all of them."
+     },
+     {
+      "t": "That is my pick for this week's session. Have a colleague build one small plugin, a runbook skill plus the MCP server it needs, then install it in VS Code and in the CLI in the same half hour. It is concrete, and it turns sharing our AI practice into something you can hand to eighty consultants. Have a good week.",
+      "s": "That is my pick for this week's session. Have a colleague build one small plugin, a runbook skill plus the M C P server it needs, then install it in VS Code and in the C L I in the same half hour. It is concrete, and it turns sharing our A I practice into something you can hand to eighty consultants. Have a good week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Snowflake Native Apps: Cortex Agents and MCP servers GA (7 Aug 2026)",
+      "u": "https://docs.snowflake.com/en/release-notes/2026/other/2026-08-07-native-apps-agents-mcp-ga"
+     },
+     {
+      "t": "Copilot impact dashboard adds a return on investment section (GitHub, 7 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section/"
+     },
+     {
+      "t": "Per-model token breakdown in the usage report (GitHub, 11 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-11-per-model-token-breakdown-in-the-usage-report"
+     },
+     {
+      "t": "Agent Plugins 1.0 in VS Code, Copilot CLI, and the Copilot app (GitHub, 12 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-12-agent-plugins-1-0-in-vs-code-copilot-cli-and-the-copilot-app"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Er kwam deze week geen spectaculair nieuw model. Wat er wel kwam is leidingwerk, en dat gaat over kosten en draagbaarheid. Op zeven augustus heeft Snowflake Cortex Agents en MCP servers in Native Apps algemeen beschikbaar gemaakt. Een leverancier kan nu een app uitleveren met een eigen gespreksagent bovenop de data die hij deelt, plus een door Snowflake beheerde MCP server die Cortex Search services, semantic views en stored procedures aanbiedt als tools die elke agent kan aanroepen. Voor een BI Consultant zit daar het punt. Je semantische laag is niet iets om naar te kijken, het is iets dat een agent aanroept. Databricks is stil sinds zes augustus en een Power BI augustus samenvatting is er nog niet, dus Microsoft is ook stil.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Er kwam deze week geen spectaculair nieuw model. Wat er wel kwam is leidingwerk, en dat gaat over kosten en draagbaarheid. Op zeven augustus heeft Snowflake Cortex Agents en M C P servers in Native Apps algemeen beschikbaar gemaakt. Een leverancier kan nu een app uitleveren met een eigen gespreksagent bovenop de data die hij deelt, plus een door Snowflake beheerde M C P server die Cortex Search services, semantic views en stored procedures aanbiedt als tools die elke agent kan aanroepen. Voor een B I Consultant zit daar het punt. Je semantische laag is niet iets om naar te kijken, het is iets dat een agent aanroept. Databricks is stil sinds zes augustus en een Power B I augustus samenvatting is er nog niet, dus Microsoft is ook stil."
+     },
+     {
+      "t": "Dan levering, en die is voor jou. Op zeven augustus zette GitHub een sectie Potential return on investment in het Copilot impact dashboard. Twee groepen naast elkaar. Ontwikkelaars die vooral chat en completions gebruiken, tegenover ontwikkelaars die agent first werken. Per groep zie je de kosten per ontwikkelaar per maand op basis van echt verbruik, die kosten als percentage van de loonsom, en het aantal pull requests per ontwikkelaar per maand. Er is een salarisschuif om met je eigen cijfers te rekenen. Op elf augustus kwam er ook een uitsplitsing per model in het verbruiksrapport. Uitgaven en output staan eindelijk op hetzelfde scherm. In een fixed price model is dat precies het getal dat je nodig hebt, al noemt GitHub de cijfers richtinggevend, dus gebruik ze als nulmeting.",
+      "s": "Dan levering, en die is voor jou. Op zeven augustus zette GitHub een sectie Potential return on investment in het Copilot impact dashboard. Twee groepen naast elkaar. Ontwikkelaars die vooral chat en completions gebruiken, tegenover ontwikkelaars die agent first werken. Per groep zie je de kosten per ontwikkelaar per maand op basis van echt verbruik, die kosten als percentage van de loonsom, en het aantal pull requests per ontwikkelaar per maand. Er is een salarisschuif om met je eigen cijfers te rekenen. Op elf augustus kwam er ook een uitsplitsing per model in het verbruiksrapport. Uitgaven en output staan eindelijk op hetzelfde scherm. In een fixed price model is dat precies het getal dat je nodig hebt, al noemt GitHub de cijfers richtinggevend, dus gebruik ze als nulmeting."
+     },
+     {
+      "t": "Iets om te laten zien. GitHub publiceerde op zes augustus Agent Plugins 1.0, samen met AWS, Microsoft, OpenAI, Vercel en Anysphere, en Google stapte diezelfde dag in. Op twaalf augustus werd de ondersteuning algemeen beschikbaar in VS Code, Copilot CLI, de Copilot SDK en de Copilot app. Eén pakket bundelt een skill en een MCP server, en datzelfde pakket draait overal.",
+      "s": "Iets om te laten zien. GitHub publiceerde op zes augustus Agent Plugins een punt nul, samen met AWS, Microsoft, Open A I, Vercel en Anysphere, en Google stapte diezelfde dag in. Op twaalf augustus werd de ondersteuning algemeen beschikbaar in VS Code, Copilot C L I, de Copilot S D K en de Copilot app. Eén pakket bundelt een skill en een M C P server, en datzelfde pakket draait overal."
+     },
+     {
+      "t": "Dat is mijn keuze voor de sessie van deze week. Laat een collega één kleine plugin bouwen, een runbook skill plus de MCP server die daarbij hoort, en installeer die binnen datzelfde halfuur in VS Code en in de CLI. Het is concreet, en het maakt van onze AI praktijk delen iets dat je echt aan tachtig consultants kunt geven. Fijne week.",
+      "s": "Dat is mijn keuze voor de sessie van deze week. Laat een collega één kleine plugin bouwen, een runbook skill plus de M C P server die daarbij hoort, en installeer die binnen datzelfde halfuur in VS Code en in de C L I. Het is concreet, en het maakt van onze A I praktijk delen iets dat je echt aan tachtig consultants kunt geven. Fijne week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Snowflake Native Apps: Cortex Agents and MCP servers GA (7 Aug 2026)",
+      "u": "https://docs.snowflake.com/en/release-notes/2026/other/2026-08-07-native-apps-agents-mcp-ga"
+     },
+     {
+      "t": "Copilot impact dashboard adds a return on investment section (GitHub, 7 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-07-copilot-impact-dashboard-adds-a-return-on-investment-section/"
+     },
+     {
+      "t": "Per-model token breakdown in the usage report (GitHub, 11 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-11-per-model-token-breakdown-in-the-usage-report"
+     },
+     {
+      "t": "Agent Plugins 1.0 in VS Code, Copilot CLI, and the Copilot app (GitHub, 12 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-12-agent-plugins-1-0-in-vs-code-copilot-cli-and-the-copilot-app"
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-08-07",
+   "label": {
+    "en": "7 August 2026",
+    "nl": "7 augustus 2026"
+   },
+   "summary": {
+    "en": "Both lakehouses ship AI cost gateways",
+    "nl": "Beide lakehouses lanceren AI-kostengateways"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. Two rival data platforms shipped almost the same product within a week of each other, and that tells you exactly where the pain is right now.",
+      "s": "Good morning Ton, here is your Monday A I briefing. Two rival data platforms shipped almost the same product within a week of each other, and that tells you exactly where the pain is right now."
+     },
+     {
+      "t": "Start with the practical stuff for the teams. Databricks pushed a Genie One update on the sixth of August. The Genie Ontology is now on by default in public preview. That is a business context layer giving Genie a map of how your organisation actually names and defines things, and it is the difference between a text to SQL toy and something a Business Analyst will trust in front of a client. You can now also upload PDF files into a Genie One conversation, next to CSV and Excel. And on the third of August Databricks extended free usage of Genie One and Genie Agents all the way to the end of January 2027, so the budget excuse is gone.",
+      "s": "Start with the practical stuff for the teams. Databricks pushed a Genie One update on the sixth of August. The Genie Ontology is now on by default in public preview. That is a business context layer giving Genie a map of how your organisation actually names and defines things, and it is the difference between a text to S Q L toy and something a Business Analyst will trust in front of a client. You can now also upload P D F files into a Genie One conversation, next to C S V and Excel. And on the third of August Databricks extended free usage of Genie One and Genie Agents all the way to the end of January twenty twenty seven, so the budget excuse is gone."
+     },
+     {
+      "t": "Now delivery and consulting, and this is the one to pay attention to. Databricks made Unity AI Gateway generally available on the fourth of August. Snowflake launched Cortex AI Gateway at Black Hat a week earlier. Both do the same job: one control plane in front of every agent, model and MCP server, with hard spend caps, cost attribution per team and per user, and smart routing that sends simple tasks to cheap models. Databricks says over a quadrillion tokens passed through its gateway in the past year. Read that as a warning about scale. In a fixed price model, tokens are your margin, and you cannot defend a margin you cannot attribute.",
+      "s": "Now delivery and consulting, and this is the one to pay attention to. Databricks made Unity A I Gateway generally available on the fourth of August. Snowflake launched Cortex A I Gateway at Black Hat a week earlier. Both do the same job. One control plane in front of every agent, model and M C P server, with hard spend caps, cost attribution per team and per user, and smart routing that sends simple tasks to cheap models. Databricks says over a quadrillion tokens passed through its gateway in the past year. Read that as a warning about scale. In a fixed price model, tokens are your margin, and you cannot defend a margin you cannot attribute."
+     },
+     {
+      "t": "For something a colleague can demo in thirty minutes, GitHub shipped comment triggered Copilot automations on the third of August. You leave a comment on an issue or a pull request, and a cloud agent picks it up and does the work. Regenerate the documentation after a code change, dig through a stack trace on a bug ticket, or open follow up issues for technical debt. You configure the trigger phrase yourself in the Agents tab.",
+      "s": "For something a colleague can demo in thirty minutes, GitHub shipped comment triggered Copilot automations on the third of August. You leave a comment on an issue or a pull request, and a cloud agent picks it up and does the work. Regenerate the documentation after a code change, dig through a stack trace on a bug ticket, or open follow up issues for technical debt. You configure the trigger phrase yourself in the Agents tab."
+     },
+     {
+      "t": "That last one is my pick for this week's session. It takes ten minutes to set up, every team already has a repository, and watching an agent respond to a comment makes agentic delivery concrete instead of theoretical. Have a good week.",
+      "s": "That last one is my pick for this week's session. It takes ten minutes to set up, every team already has a repository, and watching an agent respond to a comment makes agentic delivery concrete instead of theoretical. Have a good week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI and Genie One release notes 2026",
+      "u": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Unity AI Gateway is Generally Available (Databricks, 4 Aug 2026)",
+      "u": "https://www.databricks.com/blog/unity-ai-gateway-generally-available"
+     },
+     {
+      "t": "Snowflake launches Cortex AI Gateway at Black Hat 2026",
+      "u": "https://www.snowflake.com/en/blog/enterprise-ai-security-agentic-mcp-governance/"
+     },
+     {
+      "t": "Trigger Copilot automations with comments (GitHub, 3 Aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Twee concurrerende dataplatformen brachten binnen een week vrijwel hetzelfde product uit, en dat zegt precies waar de pijn nu zit.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Twee concurrerende dataplatformen brachten binnen een week vrijwel hetzelfde product uit, en dat zegt precies waar de pijn nu zit."
+     },
+     {
+      "t": "Eerst het praktische voor de teams. Databricks bracht op 6 augustus een Genie One update uit. De Genie Ontology staat nu standaard aan, in public preview. Dat is een laag met bedrijfscontext die Genie een kaart geeft van hoe jouw organisatie dingen echt noemt en definieert. Dat is het verschil tussen een tekst naar SQL speeltje en iets waar een Business Analist bij de klant op durft te leunen. Je kunt nu ook PDF bestanden uploaden in een Genie One gesprek, naast CSV en Excel. En op 3 augustus verlengde Databricks het gratis gebruik van Genie One en Genie Agents tot eind januari 2027, dus het budgetexcuus is weg.",
+      "s": "Eerst het praktische voor de teams. Databricks bracht op zes augustus een Genie One update uit. De Genie Ontology staat nu standaard aan, in public preview. Dat is een laag met bedrijfscontext die Genie een kaart geeft van hoe jouw organisatie dingen echt noemt en definieert. Dat is het verschil tussen een tekst naar S Q L speeltje en iets waar een Business Analist bij de klant op durft te leunen. Je kunt nu ook P D F bestanden uploaden in een Genie One gesprek, naast C S V en Excel. En op drie augustus verlengde Databricks het gratis gebruik van Genie One en Genie Agents tot eind januari tweeduizend zevenentwintig, dus het budgetexcuus is weg."
+     },
+     {
+      "t": "Dan delivery en consulting, en hier moet je echt even op letten. Databricks maakte Unity AI Gateway op 4 augustus algemeen beschikbaar. Snowflake lanceerde een week eerder Cortex AI Gateway op Black Hat. Beide doen hetzelfde werk: één controlelaag voor elke agent, elk model en elke MCP server, met harde uitgavenplafonds, kostentoerekening per team en per gebruiker, en slimme routering die eenvoudige taken naar goedkope modellen stuurt. Databricks zegt dat er het afgelopen jaar meer dan duizend biljoen tokens door hun gateway zijn gegaan. Lees dat als een waarschuwing over schaal. In een fixed price model zijn tokens je marge, en je kunt geen marge verdedigen die je niet kunt toerekenen.",
+      "s": "Dan delivery en consulting, en hier moet je echt even op letten. Databricks maakte Unity A I Gateway op vier augustus algemeen beschikbaar. Snowflake lanceerde een week eerder Cortex A I Gateway op Black Hat. Beide doen hetzelfde werk. Eén controlelaag voor elke agent, elk model en elke M C P server, met harde uitgavenplafonds, kostentoerekening per team en per gebruiker, en slimme routering die eenvoudige taken naar goedkope modellen stuurt. Databricks zegt dat er het afgelopen jaar meer dan duizend biljoen tokens door hun gateway zijn gegaan. Lees dat als een waarschuwing over schaal. In een fixed price model zijn tokens je marge, en je kunt geen marge verdedigen die je niet kunt toerekenen."
+     },
+     {
+      "t": "En iets wat een collega in dertig minuten kan demonstreren: GitHub bracht op 3 augustus Copilot automations uit die je met een comment start. Je zet een reactie onder een issue of een pull request, en een cloud agent pakt het op en gaat aan de slag. Documentatie bijwerken na een codewijziging, een stack trace uitpluizen bij een bug ticket, of vervolgissues aanmaken voor technische schuld. De triggerzin stel je zelf in op het Agents tabblad.",
+      "s": "En iets wat een collega in dertig minuten kan demonstreren. GitHub bracht op drie augustus Copilot automations uit die je met een comment start. Je zet een reactie onder een issue of een pull request, en een cloud agent pakt het op en gaat aan de slag. Documentatie bijwerken na een codewijziging, een stack trace uitpluizen bij een bug ticket, of vervolgissues aanmaken voor technische schuld. De triggerzin stel je zelf in op het Agents tabblad."
+     },
+     {
+      "t": "Die laatste is mijn tip voor de sessie van deze week. Het opzetten kost tien minuten, elk team heeft al een repository, en een agent zien reageren op een comment maakt agentic delivery concreet in plaats van theoretisch. Fijne week.",
+      "s": "Die laatste is mijn tip voor de sessie van deze week. Het opzetten kost tien minuten, elk team heeft al een repository, en een agent zien reageren op een comment maakt agentic delivery concreet in plaats van theoretisch. Fijne week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI en Genie One release notes 2026",
+      "u": "https://docs.databricks.com/aws/en/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Unity AI Gateway algemeen beschikbaar (Databricks, 4 aug 2026)",
+      "u": "https://www.databricks.com/blog/unity-ai-gateway-generally-available"
+     },
+     {
+      "t": "Snowflake lanceert Cortex AI Gateway op Black Hat 2026",
+      "u": "https://www.snowflake.com/en/blog/enterprise-ai-security-agentic-mcp-governance/"
+     },
+     {
+      "t": "Copilot automations starten met een comment (GitHub, 3 aug 2026)",
+      "u": "https://github.blog/changelog/2026-08-03-trigger-copilot-automations-with-comments/"
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-31",
+   "label": {
+    "en": "31 July 2026",
+    "nl": "31 juli 2026"
+   },
+   "summary": {
+    "en": "Genie reaches Teams, Power BI answers in Copilot",
+    "nl": "Genie komt in Teams, Power BI antwoordt in Copilot"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. Quiet week for flashy launches, busy week in the plumbing your teams actually work in.",
+      "s": "Good morning Ton, here is your Monday A I briefing. Quiet week for flashy launches, busy week in the plumbing your teams actually work in."
+     },
+     {
+      "t": "Start with the data work. Databricks shipped a run of Genie updates. Since the seventeenth there is a Genie app for Microsoft Teams in public preview, so a business analyst can ask a data question in a Teams chat and get an answer without opening a workspace. On the sixteenth the Lakebridge Agentic Converter went to beta. It takes legacy SQL, T-SQL, Oracle, Teradata, Redshift, BigQuery, and converts it to ANSI SQL. It checks syntax and intent, and fixes its own errors before writing the result. That is migration work that used to eat weeks. One warning: the free window for Genie One and Genie Agents ends today. From tomorrow it is pay as you go, so tell your teams before someone gets a surprise bill.",
+      "s": "Start with the data work. Databricks shipped a run of Genie updates. Since the seventeenth there is a Genie app for Microsoft Teams in public preview, so a business analyst can ask a data question in a Teams chat and get an answer without opening a workspace. On the sixteenth the Lakebridge Agentic Converter went to beta. It takes legacy S Q L, T S Q L, Oracle, Teradata, Redshift, BigQuery, and converts it to ANSI S Q L. It checks syntax and intent, and fixes its own errors before writing the result. That is migration work that used to eat weeks. One warning. The free window for Genie One and Genie Agents ends today. From tomorrow it is pay as you go, so tell your teams before someone gets a surprise bill."
+     },
+     {
+      "t": "On the Microsoft side, the Power BI team spelled out on the twenty first where Copilot is heading. Power BI data can now answer questions directly inside Microsoft 365 Copilot Chat, in preview, and the heavier multi step work moves to Copilot Cowork, which is billed per use instead of a flat license. The line that matters for us: the semantic model is the advantage. AI pointed at raw tables gives answers that look right. Your measures and definitions are what make them trustworthy.",
+      "s": "On the Microsoft side, the Power B I team spelled out on the twenty first where Copilot is heading. Power B I data can now answer questions directly inside Microsoft three sixty five Copilot Chat, in preview, and the heavier multi step work moves to Copilot Cowork, which is billed per use instead of a flat license. The line that matters for us. The semantic model is the advantage. A I pointed at raw tables gives answers that look right. Your measures and definitions are what make them trustworthy."
+     },
+     {
+      "t": "On models, Anthropic released Claude Opus 5 on the twenty fourth, best in class on coding and knowledge work at roughly half the price of Fable 5. Moonshot put the open weights of Kimi K3 out on the twenty seventh, the largest open model so far. Nothing landed this week that speaks directly to fixed price delivery, so I am skipping that theme.",
+      "s": "On models, Anthropic released Claude Opus five on the twenty fourth, best in class on coding and knowledge work at roughly half the price of Fable five. Moonshot put the open weights of Kimi K three out on the twenty seventh, the largest open model so far. Nothing landed this week that speaks directly to fixed price delivery, so I am skipping that theme."
+     },
+     {
+      "t": "My pick for this week's session: Power BI answering questions inside Microsoft 365 Copilot Chat. It is visual, it takes five minutes to show, and it makes the case that the semantic model work your BI consultants already do is exactly what makes AI trustworthy. Have a good week.",
+      "s": "My pick for this week's session. Power B I answering questions inside Microsoft three sixty five Copilot Chat. It is visual, it takes five minutes to show, and it makes the case that the semantic model work your B I consultants already do is exactly what makes A I trustworthy. Have a good week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Azure Databricks release notes, July 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/july"
+     },
+     {
+      "t": "Bringing Power BI Insights to Every Copilot User",
+      "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Bringing-Power-BI-Insights-to-Every-Copilot-User/ba-p/5309360"
+     },
+     {
+      "t": "Introducing Claude Opus 5",
+      "u": "https://www.anthropic.com/news/claude-opus-5"
+     },
+     {
+      "t": "Moonshot unveils Kimi K3, largest open-weight model",
+      "u": "https://www.axios.com/2026/07/16/moonshot-kimi-ai-china-model-openai-anthropic"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Rustige week qua grote lanceringen, drukke week in de leidingen waar je teams echt mee werken.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Rustige week qua grote lanceringen, drukke week in de leidingen waar je teams echt mee werken."
+     },
+     {
+      "t": "Eerst het datawerk. Databricks leverde een reeks Genie updates. Sinds zeventien juli is er een Genie app voor Microsoft Teams in public preview, zodat een business analist een datavraag in een Teams chat kan stellen en antwoord krijgt zonder een workspace te openen. Op zestien juli ging de Lakebridge Agentic Converter naar beta. Die pakt oude SQL, T-SQL, Oracle, Teradata, Redshift, BigQuery, en zet het om naar ANSI SQL. Hij controleert syntax en bedoeling, en repareert zijn eigen fouten voordat hij het resultaat wegschrijft. Dat is migratiewerk waar vroeger weken in gingen zitten. Eén waarschuwing: de gratis periode voor Genie One en Genie Agents stopt vandaag. Vanaf morgen is het pay as you go, dus zeg het je teams voordat iemand een onverwachte rekening krijgt.",
+      "s": "Eerst het datawerk. Databricks leverde een reeks Genie updates. Sinds zeventien juli is er een Genie app voor Microsoft Teams in public preview, zodat een business analist een datavraag in een Teams chat kan stellen en antwoord krijgt zonder een workspace te openen. Op zestien juli ging de Lakebridge Agentic Converter naar beta. Die pakt oude S Q L, T S Q L, Oracle, Teradata, Redshift, BigQuery, en zet het om naar ANSI S Q L. Hij controleert syntax en bedoeling, en repareert zijn eigen fouten voordat hij het resultaat wegschrijft. Dat is migratiewerk waar vroeger weken in gingen zitten. Eén waarschuwing. De gratis periode voor Genie One en Genie Agents stopt vandaag. Vanaf morgen is het pay as you go, dus zeg het je teams voordat iemand een onverwachte rekening krijgt."
+     },
+     {
+      "t": "Aan de Microsoft kant legde het Power BI team op eenentwintig juli uit waar Copilot heen gaat. Power BI data kan nu rechtstreeks vragen beantwoorden in Microsoft 365 Copilot Chat, in preview, en het zwaardere werk in meerdere stappen verhuist naar Copilot Cowork, dat per gebruik wordt afgerekend in plaats van een vaste licentie. De zin die er voor ons toe doet: het semantische model is je voorsprong. AI die je op ruwe tabellen loslaat geeft antwoorden die er goed uitzien. Jouw measures en definities maken ze pas betrouwbaar.",
+      "s": "Aan de Microsoft kant legde het Power B I team op eenentwintig juli uit waar Copilot heen gaat. Power B I data kan nu rechtstreeks vragen beantwoorden in Microsoft drie zes vijf Copilot Chat, in preview, en het zwaardere werk in meerdere stappen verhuist naar Copilot Cowork, dat per gebruik wordt afgerekend in plaats van een vaste licentie. De zin die er voor ons toe doet. Het semantische model is je voorsprong. A I die je op ruwe tabellen loslaat geeft antwoorden die er goed uitzien. Jouw measures en definities maken ze pas betrouwbaar."
+     },
+     {
+      "t": "Qua modellen bracht Anthropic op vierentwintig juli Claude Opus 5 uit, de beste in coding en kenniswerk voor ongeveer de helft van de prijs van Fable 5. Moonshot zette op zevenentwintig juli de open weights van Kimi K3 online, het grootste open model tot nu toe. Over fixed price delivery was er deze week niets, dus dat thema sla ik over.",
+      "s": "Qua modellen bracht Anthropic op vierentwintig juli Claude Opus vijf uit, de beste in coding en kenniswerk voor ongeveer de helft van de prijs van Fable vijf. Moonshot zette op zevenentwintig juli de open weights van Kimi K drie online, het grootste open model tot nu toe. Over fixed price delivery was er deze week niets, dus dat thema sla ik over."
+     },
+     {
+      "t": "Mijn tip voor de sessie van deze week: Power BI dat vragen beantwoordt in Microsoft 365 Copilot Chat. Het is visueel, je laat het in vijf minuten zien, en het maakt het punt dat het semantische modelwerk dat je BI consultants al doen precies is wat AI betrouwbaar maakt. Fijne week.",
+      "s": "Mijn tip voor de sessie van deze week. Power B I dat vragen beantwoordt in Microsoft drie zes vijf Copilot Chat. Het is visueel, je laat het in vijf minuten zien, en het maakt het punt dat het semantische modelwerk dat je B I consultants al doen precies is wat A I betrouwbaar maakt. Fijne week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Azure Databricks release notes, juli 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/release-notes/product/2026/july"
+     },
+     {
+      "t": "Power BI inzichten voor elke Copilot gebruiker",
+      "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Bringing-Power-BI-Insights-to-Every-Copilot-User/ba-p/5309360"
+     },
+     {
+      "t": "Introducing Claude Opus 5",
+      "u": "https://www.anthropic.com/news/claude-opus-5"
+     },
+     {
+      "t": "Moonshot onthult Kimi K3, grootste open-weight model",
+      "u": "https://www.axios.com/2026/07/16/moonshot-kimi-ai-china-model-openai-anthropic"
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-26",
+   "label": {
+    "en": "26 July 2026",
+    "nl": "26 juli 2026"
+   },
+   "summary": {
+    "en": "Genie gets memory, Cowork learns by watching",
+    "nl": "Genie krijgt geheugen, Cowork leert door te kijken"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. The theme this week: the assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper.",
+      "s": "Good morning Ton, here is your Monday A I briefing. The theme this week. The assistants inside your data stack started remembering things, and the cheap tier got a lot cheaper."
+     },
+     {
+      "t": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone: Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget.",
+      "s": "Start with the tools your consultants actually touch. Databricks shipped a real update to Genie One on the sixteenth. It now has memory in beta, so it holds on to your preferences and how you like to work, and applies them next time. It can also search your past conversations and pull that context forward, and you can save any chat thread as a reusable Genie Agent. That last one matters most. It turns a good one off analysis into something the rest of the team can run. Worth telling everyone. Genie One and Genie Agents are free until the thirty first of July, so there are five days left to try it without touching a budget."
+     },
+     {
+      "t": "On delivery, Info-Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from AI, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome.",
+      "s": "On delivery, Info Tech published a study this month with a number that should sit uncomfortably with us. Ninety four percent of developers report productivity gains from A I, but governance maturity is lagging well behind adoption. For fixed price work, that gap is the risk. The speed is real, the review and security practice has not caught up, and we are the ones carrying the outcome."
+     },
+     {
+      "t": "Also worth knowing, the price floor moved again. Google shipped Gemini 3.6 Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. DeepSeek V4 went stable on the twenty fourth, and Kimi K3 releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome.",
+      "s": "Also worth knowing, the price floor moved again. Google shipped Gemini three point six Flash on the twenty first, cheaper and using about seventeen percent fewer output tokens. Deep Seek V four went stable on the twenty fourth, and Kimi K three releases its open weights tomorrow. Routine volume is getting cheap fast, which is good news for anyone owning a fixed price outcome."
+     },
+     {
+      "t": "My pick for this week's session: the new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week.",
+      "s": "My pick for this week's session. The new record and teach feature in Claude Cowork. You record yourself doing a task while talking through it, and Claude turns that into a reusable skill. No prompt engineering needed. That is exactly the bridge from enthusiasm to everyday practice we have been looking for. Have a good week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI and Genie release notes 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Info-Tech AI in Software Development study",
+      "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html"
+     },
+     {
+      "t": "Google ships Gemini 3.6 Flash",
+      "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/"
+     },
+     {
+      "t": "AI News, 22 July 2026 (Cowork skills, open weights)",
+      "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het thema van deze week: de assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het thema van deze week. De assistenten in je datastack zijn dingen gaan onthouden, en de goedkope laag werd een stuk goedkoper."
+     },
+     {
+      "t": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen: Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken.",
+      "s": "Eerst de tools waar je consultants echt mee werken. Databricks bracht op zestien juli een serieuze update van Genie One uit. Er zit nu geheugen in, in beta, dus het onthoudt je voorkeuren en hoe je graag werkt, en past dat de volgende keer toe. Het kan ook je eerdere gesprekken doorzoeken en die context meenemen, en je kunt elke chat opslaan als een herbruikbare Genie Agent. Dat laatste is het interessantst. Daarmee wordt een goede eenmalige analyse iets wat de rest van het team ook kan draaien. Meld dit even aan iedereen. Genie One en Genie Agents zijn gratis tot en met eenendertig juli, dus er zijn nog vijf dagen om het te proberen zonder budget aan te spreken."
+     },
+     {
+      "t": "Over delivery. Info-Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door AI, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed-price werk zit precies daar het risico. De snelheid is echt, de review- en securitypraktijk is nog niet mee, en wij dragen het resultaat.",
+      "s": "Over delivery. Info Tech publiceerde deze maand een onderzoek met een cijfer dat ons ongemakkelijk zou moeten maken. Vierennegentig procent van de ontwikkelaars ziet productiviteitswinst door A I, maar de volwassenheid van governance loopt flink achter op de adoptie. Bij fixed price werk zit precies daar het risico. De snelheid is echt, de review en security praktijk is nog niet mee, en wij dragen het resultaat."
+     },
+     {
+      "t": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini 3.6 Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. DeepSeek V4 werd stabiel op vierentwintig juli, en Kimi K3 geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed-price resultaat draagt.",
+      "s": "Ook goed om te weten, de prijsbodem is weer gezakt. Google bracht op eenentwintig juli Gemini drie punt zes Flash uit, goedkoper en met ongeveer zeventien procent minder output tokens. Deep Seek V vier werd stabiel op vierentwintig juli, en Kimi K drie geeft morgen zijn open weights vrij. Routinewerk wordt snel goedkoop, en dat is goed nieuws als je een fixed price resultaat draagt."
+     },
+     {
+      "t": "Mijn tip voor de sessie van deze week: de nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week.",
+      "s": "Mijn tip voor de sessie van deze week. De nieuwe opnamefunctie van Claude Cowork. Je neemt jezelf op terwijl je een taak doet en hardop uitlegt wat je doet, en Claude maakt daar een herbruikbare skill van. Geen prompt engineering nodig. Dat is precies de brug van enthousiasme naar dagelijkse praktijk die we zoeken. Fijne week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI en Genie release notes 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Info-Tech onderzoek AI in softwareontwikkeling",
+      "u": "https://www.prnewswire.com/news-releases/94-of-developers-report-ai-productivity-gains-but-governance-maturity-lags-behind-adoption-finds-new-study-from-info-tech-research-group-302829858.html"
+     },
+     {
+      "t": "Google brengt Gemini 3.6 Flash uit",
+      "u": "https://www.marktechpost.com/2026/07/21/google-releases-gemini-3-6-flash-3-5-flash-lite-and-3-5-flash-cyber-a-cheaper-more-token-efficient-flash-tier-built-for-agentic-workloads/"
+     },
+     {
+      "t": "AI Nieuws, 22 juli 2026 (Cowork skills, open weights)",
+      "u": "https://www.buildfastwithai.com/blogs/ai-news-today-july-22-2026"
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-07-03",
+   "label": {
+    "en": "3 July 2026",
+    "nl": "3 juli 2026"
+   },
+   "summary": {
+    "en": "Agentic AI becomes an actual coworker",
+    "nl": "Agentic AI wordt een echte collega"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. Big theme this week: agentic AI moved from chat window into an actual coworker, one that creates documents and runs actions on its own.",
+      "s": "Good morning Ton, here is your Monday A I briefing. Big theme this week. Agentic A I moved from chat window into an actual coworker, one that creates documents and runs actions on its own."
+     },
+     {
+      "t": "For our Data Engineers, BI Consultants and Business Analysts: Microsoft rolled out Agent Skills for Power BI, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own BI Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and AI Summit, a data smart AI coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through MCP tools, like updating a Jira ticket on its own.",
+      "s": "For our Data Engineers, B I Consultants and Business Analysts. Microsoft rolled out Agent Skills for Power B I, letting you prompt an agent to build and refine semantic models and reports, plus a new Copilot in web modeling that improves models using plain language. Google Looker got its own B I Agents, conversational agents that query complex data models in plain English and plug straight into workspace tools. And Databricks launched Genie One at its Data and A I Summit, a data smart A I coworker that goes beyond answering questions. It creates documents straight from live data computation instead of static snapshots, and it executes actions through M C P tools, like updating a Jira ticket on its own."
+     },
+     {
+      "t": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise AI for clients. That is basically what our AI driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted AI, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps.",
+      "s": "On the delivery and consulting side, this one matters for where we're headed. Microsoft just created Frontier Company, a two and a half billion dollar unit with six thousand people whose only job is deploying enterprise A I for clients. That is basically what our A I driven fixed price ambition is racing against. New engineering benchmarks also show lower performing teams cut their lead time to value nearly in half once they properly adopted A I, while stronger teams saw smaller gains, so the biggest upside sits exactly where our supplier teams need to close gaps."
+     },
+     {
+      "t": "Anthropic also shipped Claude Sonnet 5 this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork.",
+      "s": "Anthropic also shipped Claude Sonnet five this Monday, its most agentic Sonnet yet, with a million token context window and real autonomous tool use right inside Cowork."
+     },
+     {
+      "t": "My pick for this week's session: demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an AI coworker actually does beyond chat, and that is exactly the story we're trying to tell.",
+      "s": "My pick for this week's session. Demo Databricks Genie One's live document creation and its Jira action. In five minutes it shows the room what an A I coworker actually does beyond chat, and that is exactly the story we're trying to tell."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Power BI Agent Skills",
+      "u": "https://releasebot.io/updates/microsoft/power-bi"
+     },
+     {
+      "t": "Looker BI Agents",
+      "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq"
+     },
+     {
+      "t": "Databricks Genie One",
+      "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/"
+     },
+     {
+      "t": "Microsoft Frontier Company",
+      "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/"
+     },
+     {
+      "t": "2026 Engineering Productivity Benchmarks",
+      "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery"
+     },
+     {
+      "t": "Claude Sonnet 5",
+      "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week: agentic AI is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week. Agentic A I is van het chatvenster naar een echte collega gegaan, eentje die zelf documenten maakt en acties uitvoert."
+     },
+     {
+      "t": "Voor onze Data Engineers, BI Consultants en Business Analisten: Microsoft heeft Agent Skills voor Power BI uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen BI Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and AI Summit, een datavaardige AI collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via MCP tools, zoals zelf een Jira ticket bijwerken.",
+      "s": "Voor onze Data Engineers, B I Consultants en Business Analisten. Microsoft heeft Agent Skills voor Power B I uitgerold, waarmee je een agent kunt vragen semantische modellen en rapporten te bouwen en te verbeteren, plus een nieuwe Copilot in web modeling die modellen verbetert met gewone taal. Google Looker kreeg eigen B I Agents, conversationele agents die complexe datamodellen in gewone taal bevragen en direct aansluiten op workspace tools. En Databricks lanceerde Genie One op de Data and A I Summit, een datavaardige A I collega die verder gaat dan vragen beantwoorden. Het maakt documenten rechtstreeks uit live berekeningen in plaats van statische snapshots, en voert acties uit via M C P tools, zoals zelf een Jira ticket bijwerken."
+     },
+     {
+      "t": "Dan de delivery- en consultingkant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise AI bij klanten uitrolt. Dat is in feite waar onze AI-gedreven fixed-price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze AI echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten.",
+      "s": "Dan de delivery en consulting kant, en die raakt precies waar wij heen gaan. Microsoft heeft Frontier Company opgericht, een unit van tweeëneenhalf miljard dollar met zesduizend mensen die alleen maar enterprise A I bij klanten uitrolt. Dat is in feite waar onze A I gedreven fixed price ambitie tegen opbokst. Nieuwe engineering benchmarks laten ook zien dat zwakker presterende teams hun lead time to value bijna halveerden zodra ze A I echt adopteerden, terwijl sterkere teams kleinere winst zagen. De grootste winst zit dus precies daar waar onze supplier teams gaten moeten dichten."
+     },
+     {
+      "t": "Anthropic bracht deze maandag ook Claude Sonnet 5 uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork.",
+      "s": "Anthropic bracht deze maandag ook Claude Sonnet vijf uit, de meest agentic Sonnet tot nu toe, met een contextvenster van een miljoen tokens en echt autonoom gebruik van tools binnen Cowork."
+     },
+     {
+      "t": "Mijn tip voor de sessie van deze week: demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een AI collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen.",
+      "s": "Mijn tip voor de sessie van deze week. Demo de live documentcreatie van Databricks Genie One en de Jira actie. In vijf minuten zie je wat een A I collega echt doet buiten chat om, en dat is precies het verhaal dat we willen vertellen."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Power BI Agent Skills",
+      "u": "https://releasebot.io/updates/microsoft/power-bi"
+     },
+     {
+      "t": "Looker BI Agents",
+      "u": "https://cloud.google.com/blog/products/business-intelligence/looker-in-2026-gartner-analytics-and-bi-platforms-mq"
+     },
+     {
+      "t": "Databricks Genie One",
+      "u": "https://www.flexera.com/blog/perspectives/databricks-data-ai-summit-2026/"
+     },
+     {
+      "t": "Microsoft Frontier Company",
+      "u": "https://creati.ai/ai-news/2026-07-02/microsoft-creates-frontier-company-a-2-5-billion-enterprise-ai-deployment-unit-with-6000-experts/"
+     },
+     {
+      "t": "2026 Engineering Productivity Benchmarks",
+      "u": "https://plandek.com/blog/what-ai-is-really-changing-in-software-delivery"
+     },
+     {
+      "t": "Claude Sonnet 5",
+      "u": "https://simonwillison.net/2026/Jun/30/claude-sonnet-5/"
+     }
+    ]
+   }
+  },
+  {
+   "date": "2026-06-11",
+   "label": {
+    "en": "11 June 2026",
+    "nl": "11 juni 2026"
+   },
+   "summary": {
+    "en": "Data tools quietly becoming agents",
+    "nl": "Datatools worden stilletjes agents"
+   },
+   "en": {
+    "paras": [
+     {
+      "t": "Good morning Ton, here is your Monday AI briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours.",
+      "s": "Good morning Ton, here is your Monday A I briefing. This week the big theme is that your data tools are quietly turning into agents, and the consulting world is starting to sweat about what that means for billable hours."
+     },
+     {
+      "t": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your BI people, you can now drop a Tableau or Power BI file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power BI and Fabric update, including Fabric Apps, an AI first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions.",
+      "s": "Start with the practical stuff for your teams. Databricks shipped a wave of updates to Genie this month. The headline one is Genie Ontology, which automatically builds a map of your business by reading your existing dashboards, notebooks and pipelines, so the answers get sharper without anyone hand feeding it context. Even better for your B I people, you can now drop a Tableau or Power B I file straight into Genie and it rebuilds the dashboard for you. Microsoft also pushed its June Power B I and Fabric update, including Fabric Apps, an A I first way to build data apps straight on top of your semantic models. Both of these mean less plumbing, more answering questions."
+     },
+     {
+      "t": "Now the delivery and consulting angle, which is right in your lane. A fresh 2026 consulting review made a sharp point. AI already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price AI delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams.",
+      "s": "Now the delivery and consulting angle, which is right in your lane. A fresh twenty twenty six consulting review made a sharp point. A I already makes consultants far more productive, but firms are slow to deploy it fully because it shrinks the billable hours they sell. That is exactly the tension your fixed price A I delivery model sidesteps. When you own the outcome, not the hours, productivity becomes your margin, not your enemy. Worth saying out loud to your teams."
+     },
+     {
+      "t": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session.",
+      "s": "For something a colleague can actually demo, Alteryx just previewed Agent Studio, which turns an existing data workflow into an autonomous agent without writing code. Very visual, very on theme for the session."
+     },
+     {
+      "t": "My recommendation. Demo the Databricks Genie trick of importing a Power BI file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week.",
+      "s": "My recommendation. Demo the Databricks Genie trick of importing a Power B I file and then chatting with it in plain language. It is live, it is visual, and every data consultant in the room will instantly see the time it saves. Have a good week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI and Genie release notes 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Power BI June 2026 Feature Summary",
+      "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264"
+     },
+     {
+      "t": "Future of Consulting: 2026 AI Revolution Update",
+      "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/"
+     },
+     {
+      "t": "Alteryx Agent Studio at Inspire 2026",
+      "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/"
+     }
+    ]
+   },
+   "nl": {
+    "paras": [
+     {
+      "t": "Goedemorgen Ton, hier is je maandagbriefing over AI. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren.",
+      "s": "Goedemorgen Ton, hier is je maandagbriefing over A I. Het grote thema deze week is dat je datatools stilletjes agents aan het worden zijn, en dat de consultingwereld begint te zweten over wat dat betekent voor declarabele uren."
+     },
+     {
+      "t": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je BI mensen: je kunt nu een Tableau of Power BI bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power BI en Fabric uit, inclusief Fabric Apps, een AI-first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden.",
+      "s": "Eerst het praktische voor je teams. Databricks bracht deze maand een golf aan Genie updates uit. De belangrijkste is Genie Ontology, dat automatisch een kaart van je business bouwt door je bestaande dashboards, notebooks en pipelines te lezen. Daardoor worden de antwoorden scherper zonder dat iemand handmatig context hoeft te voeren. Nog mooier voor je B I mensen. Je kunt nu een Tableau of Power B I bestand zo in Genie gooien en het bouwt het dashboard voor je opnieuw op. Microsoft bracht ook de juni update van Power B I en Fabric uit, inclusief Fabric Apps, een A I first manier om data apps direct op je semantische modellen te bouwen. Beide betekenen minder leidingwerk en meer vragen beantwoorden."
+     },
+     {
+      "t": "Dan de delivery- en consultinghoek, en die ligt precies in jouw straatje. Een recent consultingoverzicht van 2026 maakte een scherp punt. AI maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed-price AI deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen.",
+      "s": "Dan de delivery en consulting hoek, en die ligt precies in jouw straatje. Een recent consulting overzicht van twintig zesentwintig maakte een scherp punt. A I maakt consultants nu al veel productiever, maar bureaus rollen het traag uit omdat het de declarabele uren die ze verkopen kleiner maakt. Dat is precies de spanning die jouw fixed price A I deliverymodel omzeilt. Als je het resultaat bezit en niet de uren, dan wordt productiviteit je marge en niet je vijand. Het waard om hardop tegen je teams te zeggen."
+     },
+     {
+      "t": "En iets wat een collega echt kan demonstreren: Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie.",
+      "s": "En iets wat een collega echt kan demonstreren. Alteryx toonde een preview van Agent Studio, dat een bestaande data workflow omzet in een autonome agent zonder code te schrijven. Erg visueel en helemaal in lijn met het thema van de sessie."
+     },
+     {
+      "t": "Mijn aanbeveling. Demo de Databricks Genie truc: importeer een Power BI bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week.",
+      "s": "Mijn aanbeveling. Demo de Databricks Genie truc. Importeer een Power B I bestand en ga er daarna in gewone taal mee in gesprek. Het is live, het is visueel, en elke data consultant in de zaal ziet meteen hoeveel tijd het scheelt. Fijne week."
+     }
+    ],
+    "sources": [
+     {
+      "t": "Databricks AI/BI en Genie release notes 2026",
+      "u": "https://learn.microsoft.com/en-us/azure/databricks/ai-bi/release-notes/2026"
+     },
+     {
+      "t": "Power BI juni 2026 Feature Summary",
+      "u": "https://community.fabric.microsoft.com/t5/Power-BI-Updates-Blog/Power-BI-June-2026-Feature-Summary/ba-p/5193264"
+     },
+     {
+      "t": "Future of Consulting: 2026 AI Revolution Update",
+      "u": "https://futureofconsulting.ai/ai-leadership/2026-consultings-ai-revolution-update/"
+     },
+     {
+      "t": "Alteryx Agent Studio op Inspire 2026",
+      "u": "https://enterprisedna.co/resources/news/alteryx-agent-studio-inspire-2026-analytics-ai-agents/"
+     }
+    ]
+   }
+  }
+ ]
 }
 </script>
 <script>
