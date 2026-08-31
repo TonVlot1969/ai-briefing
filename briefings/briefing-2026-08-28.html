@@ -168,11 +168,15 @@ function secTitle(s){
   return s.id;
 }
 function activeSections(){
-  return sectionsOf(ed()).filter(function(s){
-    if(s.id==='outro') return true;
+  var all = sectionsOf(ed());
+  var picked = all.filter(function(s){
+    if(s.id==='outro') return false;
     if(rank(s.id)===50) return true;
     return !!selected[s.id];
-  }).sort(function(a,b){ return rank(a.id)-rank(b.id); });
+  });
+  if(!picked.length) return [];
+  return picked.concat(all.filter(function(s){ return s.id==='outro'; }))
+    .sort(function(a,b){ return rank(a.id)-rank(b.id); });
 }
 
 var Q = [], totalChars = 0, cps = 14.5, pos = 0;
