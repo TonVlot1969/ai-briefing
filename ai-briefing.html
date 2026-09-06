@@ -320,13 +320,14 @@ function startTick(){
 }
 function stopTick(){ if(tick){ clearInterval(tick); tick = null; } }
 function play(){
-  if(paused && window.speechSynthesis.paused){ window.speechSynthesis.resume(); paused = false; buttons(); paint(); return; }
-  if(playing) return;
+  if(playing && !paused) return;
   speakFrom(pos >= totalChars - 1 ? 0 : pos);
 }
 function pause(){
   if(!playing || paused) return;
-  window.speechSynthesis.pause(); paused = true; buttons(); paint();
+  gen++; window.speechSynthesis.cancel();
+  playing = false; paused = true; stopTick();
+  buttons(); paint();
 }
 function stop(soft){
   gen++; window.speechSynthesis.cancel();
