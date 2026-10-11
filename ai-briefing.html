@@ -71,9 +71,26 @@ button:disabled{opacity:.4;cursor:default}
 .sources a{color:var(--link);word-break:break-word}
 .hint{text-align:center;font-size:12px;color:var(--faint);margin-top:20px}
 .hint a{color:var(--link)}
+[hidden]{display:none!important}
+.modes{display:flex;background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:4px;gap:4px;margin:8px 0 0}
+.modes button{flex:1;border:none;background:transparent;color:var(--muted);font-size:15px;font-weight:700;
+  padding:10px 8px;border-radius:9px;cursor:pointer;font-family:inherit}
+.modes button.on{background:var(--surface2);color:var(--text);box-shadow:0 0 0 1px var(--cyan) inset}
+.badge{display:inline-block;margin-left:6px;padding:2px 8px;border-radius:999px;font-size:11px;font-weight:800;
+  letter-spacing:.04em;text-transform:uppercase;color:var(--ink);background:linear-gradient(135deg,var(--cyan),var(--violet));vertical-align:1px}
+.fld{display:flex;flex-direction:column;gap:5px;font-size:12px;color:var(--muted);flex:1;min-width:0}
+.fld select{width:100%;font-size:14px;padding:11px 10px}
+.row{display:flex;gap:10px;margin-top:10px}
+.quick{display:flex;gap:8px;align-items:center;margin-top:12px;flex-wrap:wrap}
+.quick button{border:1px solid var(--border);background:var(--surface2);color:var(--text);border-radius:999px;
+  padding:8px 13px;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit}
+.quick span{margin-left:auto;font-size:12px;color:var(--faint)}
+.script h3.speaking{color:var(--text)}
 </style></head>
 <body>
-<header><h1>&#127911; AI Briefing</h1><p id="weekstamp"></p></header>
+<header><h1>&#127911; AI Briefing</h1><p><span id="weekstamp"></span><span id="newbadge" class="badge" hidden></span></p></header>
+
+<div class="modes"><button id="mWeek" type="button" class="on">Per week</button><button id="mSeries" type="button">Per onderwerp</button></div>
 
 <div class="bar">
   <div class="langs">
@@ -83,10 +100,20 @@ button:disabled{opacity:.4;cursor:default}
   <select id="edition" aria-label="Editie"></select>
 </div>
 
-<div class="picker">
+<div class="picker" id="weekPanel">
   <h2 id="pickTitle">Kies je onderwerpen</h2>
   <div class="chips" id="chips"></div>
   <div class="pickfoot"><span id="pickCount"></span><button id="pickAll" type="button"></button></div>
+</div>
+
+<div class="picker" id="seriesPanel" hidden>
+  <h2 id="sTitle"></h2>
+  <label class="fld"><span id="lTopic"></span><select id="sTopic"></select></label>
+  <div class="row">
+    <label class="fld"><span id="lFrom"></span><select id="sFrom"></select></label>
+    <label class="fld"><span id="lTo"></span><select id="sTo"></select></label>
+  </div>
+  <div class="quick"><button id="q4" type="button"></button><button id="q8" type="button"></button><button id="qAll" type="button"></button><span id="sCount"></span></div>
 </div>
 
 <div class="controls">
@@ -116,6 +143,7 @@ button:disabled{opacity:.4;cursor:default}
 var DATA = JSON.parse(document.getElementById('data').textContent);
 var ROLES = [
   {id:'generic',      nl:'Algemeen AI nieuws', en:'General AI news'},
+  {id:'epam',         nl:'EPAM AI nieuws',     en:'EPAM AI News'},
   {id:'governance',   nl:'Data Governance',   en:'Data Governance'},
   {id:'engineering',  nl:'Data Engineers',    en:'Data Engineers'},
   {id:'bi',           nl:'BI Consultants',    en:'BI Consultants'},
@@ -126,30 +154,47 @@ var T = {
   nl:{pick:'Kies je onderwerpen', all:'Alles aan', none:'Alles uit', sources:'Bronnen',
       ready:'Klaar om af te spelen', playing:'Speelt af', paused:'Gepauzeerd', done:'Einde',
       generic:'Algemeen AI nieuws', outro:'Afsluiting', back:'terug', fwd:'vooruit', empty:'Kies minstens een onderwerp',
-      count:function(n,m){return n+' van '+m+' onderdelen, ongeveer '+m2(n)+'';},
+      byWeek:'Per week', byTopic:'Per onderwerp', sTitle:'Een onderwerp over meerdere weken',
+      topic:'Onderwerp', from:'Van', to:'Tot en met', weekOf:'Week van ',
+      last4:'Laatste 4', last8:'Laatste 8', allw:'Alles',
+      weeks:function(n){ return n + (n === 1 ? ' week' : ' weken') + ', oudste eerst'; },
+      noSeries:'Geen afleveringen voor dit onderwerp in deze periode', isNew:'Nieuw',
       hint:'Kies je functie, druk op Play en luister onderweg. Sla de app op je beginscherm op. <a href="archive.html">Alle edities</a>'},
   en:{pick:'Pick your topics', all:'Select all', none:'Clear all', sources:'Sources',
       ready:'Ready to play', playing:'Playing', paused:'Paused', done:'End',
       generic:'General AI news', outro:'Wrap up', back:'back', fwd:'forward', empty:'Pick at least one topic',
-      count:function(n,m){return n+' of '+m+' blocks';},
+      byWeek:'By week', byTopic:'By topic', sTitle:'One topic across several weeks',
+      topic:'Topic', from:'From', to:'To', weekOf:'Week of ',
+      last4:'Last 4', last8:'Last 8', allw:'All',
+      weeks:function(n){ return n + (n === 1 ? ' week' : ' weeks') + ', oldest first'; },
+      noSeries:'No episodes for this topic in this period', isNew:'New',
       hint:'Pick your role, press Play and listen on the move. Add the app to your home screen. <a href="archive.html">All editions</a>'}
 };
-function m2(){return '';}
 
-var lang = 'nl', edIdx = 0;
+var lang = 'nl', edIdx = 0, mode = 'week', sTopic = 'generic', sFrom = '', sTo = '';
 var selected = {};
 ROLES.forEach(function(r){ selected[r.id] = true; });
 
 try{
   var sl = localStorage.getItem('brief.lang'); if(sl==='nl'||sl==='en') lang = sl;
   var sr = localStorage.getItem('brief.roles');
-  if(sr){ var arr = JSON.parse(sr); ROLES.forEach(function(r){ selected[r.id] = arr.indexOf(r.id) >= 0; }); }
+  if(sr){ var arr = JSON.parse(sr); ROLES.forEach(function(r){ selected[r.id] = arr.indexOf(r.id) >= 0 || r.id === 'epam' && !localStorage.getItem('brief.epamseen'); }); }
+  localStorage.setItem('brief.epamseen', '1');
+  var sm = localStorage.getItem('brief.mode'); if(sm==='week'||sm==='series') mode = sm;
+  var st = localStorage.getItem('brief.stopic'); if(st) sTopic = st;
 }catch(e){}
 function save(){ try{ localStorage.setItem('brief.lang',lang);
+  localStorage.setItem('brief.mode',mode); localStorage.setItem('brief.stopic',sTopic);
   localStorage.setItem('brief.roles', JSON.stringify(ROLES.filter(function(r){return selected[r.id];}).map(function(r){return r.id;}))); }catch(e){} }
 
 var eds = DATA.briefings.slice().sort(function(a,b){ return a.date < b.date ? 1 : (a.date > b.date ? -1 : 0); });
 function ed(){ return eds[edIdx]; }
+
+/* new-edition marker: remembers the newest edition this browser has seen */
+var seenAtLoad = '';
+try{ seenAtLoad = localStorage.getItem('brief.seen') || ''; }catch(e){}
+function isNew(e){ return seenAtLoad ? e.date > seenAtLoad : e === eds[0]; }
+setTimeout(function(){ try{ localStorage.setItem('brief.seen', eds[0].date); }catch(e){} }, 4000);
 
 function rank(id){ if(id==='intro') return -1; if(id==='outro') return 99;
   for(var i=0;i<ROLES.length;i++) if(ROLES[i].id===id) return i; return 50; }
@@ -158,12 +203,12 @@ function sectionsOf(e){
   if(e.sections && e.sections.length) return e.sections;
   return [{id:'generic', title:{en:'This week', nl:'Deze week'}, en:e.en, nl:e.nl}];
 }
+function roleName(id){ for(var i=0;i<ROLES.length;i++) if(ROLES[i].id===id) return ROLES[i][lang]; return id; }
 function secTitle(s){
   if(s.title && s.title[lang]) return s.title[lang];
   if(s.id==='generic') return T[lang].generic;
   if(s.id==='outro') return T[lang].outro;
-  for(var i=0;i<ROLES.length;i++) if(ROLES[i].id===s.id) return ROLES[i][lang];
-  return s.id;
+  return roleName(s.id);
 }
 function activeSections(){
   var all = sectionsOf(ed());
@@ -175,6 +220,32 @@ function activeSections(){
   if(!picked.length) return [];
   return picked.concat(all.filter(function(s){ return s.id==='intro'||s.id==='outro'; }))
     .sort(function(a,b){ return rank(a.id)-rank(b.id); });
+}
+
+/* series mode: one topic across a range of weeks, oldest first */
+function topicSection(e, id){
+  var ss = sectionsOf(e);
+  for(var i=0;i<ss.length;i++) if(ss[i].id===id && ss[i][lang] && ss[i][lang].paras) return ss[i];
+  return null;
+}
+function topicEds(id){ return eds.filter(function(e){ return !!topicSection(e, id); }).reverse(); }
+function setLast(n){
+  var te = topicEds(sTopic);
+  if(!te.length){ sFrom = sTo = ''; return; }
+  sTo = te[te.length-1].date;
+  sFrom = te[Math.max(0, te.length - n)].date;
+}
+function seriesEds(){ return topicEds(sTopic).filter(function(e){ return e.date >= sFrom && e.date <= sTo; }); }
+
+function blocks(){
+  if(mode === 'series'){
+    return seriesEds().map(function(e){
+      var s = topicSection(e, sTopic);
+      var head = T[lang].weekOf + e.label[lang];
+      return {title: head, spoken: head + '.', body: s[lang]};
+    });
+  }
+  return activeSections().map(function(s){ return {title: secTitle(s), spoken: '', body: s[lang]}; });
 }
 
 var Q = [], totalChars = 0, cps = 14.5, pos = 0;
@@ -202,16 +273,18 @@ function chunk(text){
   grouped.forEach(function(g){ hardSplit(g.trim()).forEach(function(h){ if(h.trim()) out.push(h.trim()); }); });
   return out.length ? out : [text];
 }
+function push(title, text, el){
+  Q.push({title:title, text:text, gstart:totalChars, len:text.length, el:el});
+  totalChars += text.length + 1;
+}
 function buildQueue(){
   Q = []; totalChars = 0;
-  activeSections().forEach(function(s, si){
-    var body = s[lang]; if(!body || !body.paras) return;
-    body.paras.forEach(function(p, pi){
+  blocks().forEach(function(b, si){
+    if(!b.body || !b.body.paras) return;
+    if(b.spoken) push(b.title, b.spoken, 'h_'+si);
+    b.body.paras.forEach(function(p, pi){
       var spoken = (p.s && p.s.length) ? p.s : p.t;
-      chunk(spoken).forEach(function(c){
-        Q.push({sec:si, secId:s.id, title:secTitle(s), t:p.t, text:c, gstart:totalChars, len:c.length, key:si+'_'+pi});
-        totalChars += c.length + 1;
-      });
+      chunk(spoken).forEach(function(c){ push(b.title, c, 'p_'+si+'_'+pi); });
     });
   });
 }
@@ -223,15 +296,15 @@ function fmt(sec){ sec = Math.max(0, Math.round(sec)); var m = Math.floor(sec/60
 
 function render(){
   var host = document.getElementById('script'); host.innerHTML = '';
-  activeSections().forEach(function(s, si){
-    var body = s[lang]; if(!body || !body.paras) return;
-    var h = document.createElement('h3'); h.textContent = secTitle(s); host.appendChild(h);
-    body.paras.forEach(function(p, pi){
+  blocks().forEach(function(b, si){
+    if(!b.body || !b.body.paras) return;
+    var h = document.createElement('h3'); h.textContent = b.title; h.id = 'h_'+si; host.appendChild(h);
+    b.body.paras.forEach(function(p, pi){
       var el = document.createElement('p'); el.textContent = p.t; el.id = 'p_'+si+'_'+pi; host.appendChild(el);
     });
-    if(body.sources && body.sources.length){
+    if(b.body.sources && b.body.sources.length){
       var d = document.createElement('div'); d.className = 'sources';
-      d.innerHTML = '<strong>'+T[lang].sources+'</strong><br>' + body.sources.map(function(x){
+      d.innerHTML = '<strong>'+T[lang].sources+'</strong><br>' + b.body.sources.map(function(x){
         return '<a href="'+x.u+'" target="_blank" rel="noopener">'+x.t+'</a>'; }).join('<br>');
       host.appendChild(d);
     }
@@ -239,9 +312,9 @@ function render(){
 }
 function highlight(){
   var cur = Q.length ? Q[itemAt(pos)] : null;
-  var all = document.querySelectorAll('#script p');
+  var all = document.querySelectorAll('#script .speaking');
   for(var i=0;i<all.length;i++) all[i].classList.remove('speaking');
-  if(cur && playing){ var el = document.getElementById('p_'+cur.key); if(el) el.classList.add('speaking'); }
+  if(cur && playing){ var el = document.getElementById(cur.el); if(el) el.classList.add('speaking'); }
 }
 function paint(){
   var pct = totalChars ? Math.min(100, (pos/totalChars)*100) : 0;
@@ -251,7 +324,7 @@ function paint(){
   var st = document.getElementById('status');
   if(playing && !paused) st.textContent = T[lang].playing + ' · ' + (Q.length ? Q[itemAt(pos)].title : '');
   else if(paused) st.textContent = T[lang].paused;
-  else if(!Q.length) st.textContent = T[lang].empty;
+  else if(!Q.length) st.textContent = mode === 'series' ? T[lang].noSeries : T[lang].empty;
   else st.textContent = T[lang].ready + ' · ' + fmt(totalChars/cps);
   highlight();
 }
@@ -341,7 +414,6 @@ function seek(sec){
   else { pos = np; paint(); }
 }
 function buttons(){
-  document.getElementById('play').innerHTML = (playing && !paused) ? '&#9654; Play' : '&#9654; Play';
   document.getElementById('pause').disabled = !playing || paused;
   document.getElementById('stop').disabled = !playing && pos === 0;
 }
@@ -364,29 +436,70 @@ function chips(){
   b.textContent = (n === m && m > 0) ? T[lang].none : T[lang].all;
   b.onclick = function(){ var on = !(n === m && m > 0); ROLES.forEach(function(r){ selected[r.id] = on; }); save(); refresh(); };
   document.getElementById('pickTitle').textContent = T[lang].pick;
-  document.getElementById('back10').innerHTML = '&#8630; 10<small>' + T[lang].back + '</small>';
-  document.getElementById('fwd10').innerHTML = '10 &#8631;<small>' + T[lang].fwd + '</small>';
-  document.getElementById('hint').innerHTML = T[lang].hint;
+}
+function opt(sel, value, text){ var o = document.createElement('option'); o.value = value; o.textContent = text; sel.appendChild(o); }
+function seriesUI(){
+  var avail = ROLES.filter(function(r){ return topicEds(r.id).length > 0; });
+  if(!avail.some(function(r){ return r.id === sTopic; })) sTopic = avail.length ? avail[0].id : 'generic';
+  var te = topicEds(sTopic);
+  var dates = te.map(function(e){ return e.date; });
+  if(dates.indexOf(sFrom) < 0 || dates.indexOf(sTo) < 0 || sFrom > sTo) setLast(4);
+  var t = document.getElementById('sTopic'); t.innerHTML = '';
+  avail.forEach(function(r){ opt(t, r.id, r[lang]); }); t.value = sTopic;
+  var f = document.getElementById('sFrom'), u = document.getElementById('sTo'); f.innerHTML = ''; u.innerHTML = '';
+  te.forEach(function(e){ opt(f, e.date, e.label[lang]); });
+  te.slice().reverse().forEach(function(e){ opt(u, e.date, e.label[lang]); });
+  f.value = sFrom; u.value = sTo;
+  document.getElementById('sTitle').textContent = T[lang].sTitle;
+  document.getElementById('lTopic').textContent = T[lang].topic;
+  document.getElementById('lFrom').textContent = T[lang].from;
+  document.getElementById('lTo').textContent = T[lang].to;
+  document.getElementById('q4').textContent = T[lang].last4;
+  document.getElementById('q8').textContent = T[lang].last8;
+  document.getElementById('qAll').textContent = T[lang].allw;
+  var n = seriesEds().length;
+  document.getElementById('sCount').textContent = n ? T[lang].weeks(n) : '';
 }
 function editions(){
   var s = document.getElementById('edition'); s.innerHTML = '';
   eds.forEach(function(e, i){
-    var o = document.createElement('option'); o.value = i;
-    o.textContent = e.label[lang] + ' · ' + (e.summary ? e.summary[lang] : '');
-    s.appendChild(o);
+    opt(s, i, (isNew(e) ? '● ' : '') + e.label[lang] + ' · ' + (e.summary ? e.summary[lang] : ''));
   });
   s.value = edIdx;
 }
 function refresh(){
   stop(false);
-  document.getElementById('weekstamp').textContent = ed().label[lang];
+  var series = mode === 'series';
+  document.getElementById('mWeek').className = series ? '' : 'on';
+  document.getElementById('mSeries').className = series ? 'on' : '';
+  document.getElementById('mWeek').textContent = T[lang].byWeek;
+  document.getElementById('mSeries').textContent = T[lang].byTopic;
+  document.getElementById('edition').hidden = series;
+  document.getElementById('weekPanel').hidden = series;
+  document.getElementById('seriesPanel').hidden = !series;
+  document.getElementById('weekstamp').textContent = series ? roleName(sTopic) : ed().label[lang];
+  var nb = document.getElementById('newbadge');
+  nb.textContent = T[lang].isNew; nb.hidden = series || !isNew(ed());
   document.getElementById('nl').className = lang === 'nl' ? 'on' : '';
   document.getElementById('en').className = lang === 'en' ? 'on' : '';
-  chips(); editions(); buildQueue(); render(); pos = 0; paint(); buttons();
+  document.getElementById('back10').innerHTML = '&#8630; 10<small>' + T[lang].back + '</small>';
+  document.getElementById('fwd10').innerHTML = '10 &#8631;<small>' + T[lang].fwd + '</small>';
+  document.getElementById('hint').innerHTML = T[lang].hint;
+  if(series) seriesUI(); else chips();
+  if(series) document.getElementById('weekstamp').textContent = roleName(sTopic);
+  editions(); buildQueue(); render(); pos = 0; paint(); buttons();
 }
 
 document.getElementById('nl').onclick = function(){ lang = 'nl'; save(); refresh(); };
 document.getElementById('en').onclick = function(){ lang = 'en'; save(); refresh(); };
+document.getElementById('mWeek').onclick = function(){ mode = 'week'; save(); refresh(); };
+document.getElementById('mSeries').onclick = function(){ mode = 'series'; save(); refresh(); };
+document.getElementById('sTopic').onchange = function(){ sTopic = this.value; setLast(4); save(); refresh(); };
+document.getElementById('sFrom').onchange = function(){ sFrom = this.value; if(sFrom > sTo) sTo = sFrom; refresh(); };
+document.getElementById('sTo').onchange = function(){ sTo = this.value; if(sTo < sFrom) sFrom = sTo; refresh(); };
+document.getElementById('q4').onclick = function(){ setLast(4); refresh(); };
+document.getElementById('q8').onclick = function(){ setLast(8); refresh(); };
+document.getElementById('qAll').onclick = function(){ setLast(9999); refresh(); };
 document.getElementById('edition').onchange = function(){ edIdx = parseInt(this.value, 10) || 0; refresh(); };
 document.getElementById('play').onclick = play;
 document.getElementById('pause').onclick = pause;
@@ -400,6 +513,7 @@ document.getElementById('prog').onclick = function(e){
   if(playing){ speakFrom(np); } else { pos = np; paint(); }
 };
 document.addEventListener('keydown', function(e){
+  if(e.target && e.target.tagName === 'SELECT') return;
   if(e.key === 'ArrowLeft'){ seek(-10); } else if(e.key === 'ArrowRight'){ seek(10); }
   else if(e.code === 'Space'){ e.preventDefault(); if(playing && !paused) pause(); else play(); }
 });
