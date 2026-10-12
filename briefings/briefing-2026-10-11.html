@@ -97,12 +97,20 @@ header{position:relative}
 .info li{margin:0 0 7px}
 .info .small{font-size:13px;color:var(--faint)}
 .info .langs{display:inline-flex;margin:14px 0 4px}
-</style></head>
+.rolecard{background:var(--surface);border:1px solid var(--violet);border-radius:14px;padding:12px 14px;margin:8px 0 4px}
+.rolecard h2{font-size:14px;margin:0 0 4px;color:var(--text)}
+.rolecard p{font-size:12px;color:var(--muted);margin:0 0 10px}
+.rolecard .chips .chip{padding:8px 12px;font-size:13px}
+.rolecard .skip{background:none;border:none;color:var(--link);font-size:12px;font-family:inherit;cursor:pointer;padding:6px 0 0}
+.info .linkbtn{background:none;border:none;color:var(--link);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
+</style>
+<script data-goatcounter="https://tonvlot-aibriefing.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script></head>
 <body>
 <header><button id="infoBtn" class="infobtn" type="button" aria-label="Info">i</button><h1>&#127911; AI Briefing</h1><p><span id="weekstamp"></span><span id="newbadge" class="badge" hidden></span></p></header>
 
 <div id="infoView" class="info" hidden></div>
 <div id="mainView">
+<div class="rolecard" id="roleCard" hidden></div>
 <div class="modes"><button id="mWeek" type="button" class="on">Per week</button><button id="mSeries" type="button">Per onderwerp</button></div>
 
 <div class="bar">
@@ -197,6 +205,62 @@ try{
   var sm = localStorage.getItem('brief.mode'); if(sm==='week'||sm==='series') mode = sm;
   var st = localStorage.getItem('brief.stopic'); if(st) sTopic = st;
 }catch(e){}
+var myRole = '', hadSavedRoles = false;
+try{ myRole = localStorage.getItem('brief.myrole') || ''; hadSavedRoles = !!localStorage.getItem('brief.roles'); }catch(e){}
+var ROLEQ = [
+  {id:'governance', nl:'Data Governance', en:'Data Governance'},
+  {id:'engineering', nl:'Data Engineer', en:'Data Engineer'},
+  {id:'bi', nl:'BI Consultant', en:'BI Consultant'},
+  {id:'architecture', nl:'Data Architect', en:'Data Architect'},
+  {id:'delivery', nl:'Delivery Manager', en:'Delivery Manager'},
+  {id:'other', nl:'Anders', en:'Other'}
+];
+var RQ = {
+  nl:{q:'Wat is je rol?', why:'Anoniem. Zo zie ik welke rollen de briefing gebruiken, en staan jouw onderwerpen alvast aan.', skip:'Liever niet', mine:'Je rol', change:'wijzigen', none:'niet opgegeven'},
+  en:{q:'What is your role?', why:'Anonymous. It shows which roles use the briefing, and it preselects your topics.', skip:'Rather not say', mine:'Your role', change:'change', none:'not shared'}
+};
+/* anonymous usage events, GoatCounter, no cookies, no personal data */
+var gcQueue = [], gcSent = {};
+function gcFlush(){
+  if(!(window.goatcounter && window.goatcounter.count)) return false;
+  while(gcQueue.length){ var n = gcQueue.shift(); try{ window.goatcounter.count({path: n, title: n, event: true}); }catch(e){} }
+  return true;
+}
+function track(name, once){
+  if(once){ if(gcSent[name]) return; gcSent[name] = true; }
+  gcQueue.push(name);
+  if(!gcFlush()){ var tries = 0, t = setInterval(function(){ if(gcFlush() || ++tries > 20) clearInterval(t); }, 500); }
+}
+function trackDaily(name){
+  var day = new Date().toISOString().slice(0,10), key = 'brief.ev.' + name;
+  try{ if(localStorage.getItem(key) === day) return; localStorage.setItem(key, day); }catch(e){}
+  track(name);
+}
+function roleName2(id){ for(var i=0;i<ROLEQ.length;i++) if(ROLEQ[i].id===id) return ROLEQ[i][lang]; return RQ[lang].none; }
+function renderRole(){
+  var c = document.getElementById('roleCard');
+  if(myRole){ c.hidden = true; return; }
+  c.hidden = false;
+  c.innerHTML = '<h2>' + RQ[lang].q + '</h2><p>' + RQ[lang].why + '</p><div class="chips" id="roleChips"></div><button class="skip" type="button" id="roleSkip">' + RQ[lang].skip + '</button>';
+  var host = document.getElementById('roleChips');
+  ROLEQ.forEach(function(r){
+    var ch = document.createElement('span'); ch.className = 'chip'; ch.innerHTML = '<span class="dot"></span>' + r[lang];
+    ch.onclick = function(){ setRole(r.id); };
+    host.appendChild(ch);
+  });
+  document.getElementById('roleSkip').onclick = function(){ setRole('skip'); };
+}
+function setRole(id){
+  myRole = id;
+  try{ localStorage.setItem('brief.myrole', id); }catch(e){}
+  track('role-' + id);
+  if(id !== 'skip' && id !== 'other' && !hadSavedRoles){
+    ROLES.forEach(function(r){ selected[r.id] = (r.id === 'generic' || r.id === 'epam' || r.id === id); });
+    hadSavedRoles = true;
+  }
+  save(); refresh();
+}
+var milestones = {};
 function save(){ try{ localStorage.setItem('brief.lang',lang);
   localStorage.setItem('brief.mode',mode); localStorage.setItem('brief.stopic',sTopic);
   localStorage.setItem('brief.roles', JSON.stringify(ROLES.filter(function(r){return selected[r.id];}).map(function(r){return r.id;}))); }catch(e){} }
@@ -256,10 +320,10 @@ function blocks(){
     return seriesEds().map(function(e){
       var s = topicSection(e, sTopic);
       var head = T[lang].weekOf + e.label[lang];
-      return {title: head, spoken: head + '.', body: s[lang]};
+      return {id: sTopic, title: head, spoken: head + '.', body: s[lang]};
     });
   }
-  return activeSections().map(function(s){ return {title: secTitle(s), spoken: '', body: s[lang]}; });
+  return activeSections().map(function(s){ return {id: s.id, title: secTitle(s), spoken: '', body: s[lang]}; });
 }
 
 var Q = [], totalChars = 0, cps = 14.5, pos = 0;
@@ -292,7 +356,7 @@ function push(title, text, el){
   totalChars += text.length + 1;
 }
 function buildQueue(){
-  Q = []; totalChars = 0;
+  Q = []; totalChars = 0; milestones = {};
   blocks().forEach(function(b, si){
     if(!b.body || !b.body.paras) return;
     if(b.spoken) push(b.title, b.spoken, 'h_'+si);
@@ -317,7 +381,7 @@ function render(){
       var el = document.createElement('p'); el.textContent = p.t; el.id = 'p_'+si+'_'+pi; host.appendChild(el);
     });
     if(b.body.sources && b.body.sources.length){
-      var d = document.createElement('div'); d.className = 'sources';
+      var d = document.createElement('div'); d.className = 'sources'; d.setAttribute('data-id', b.id || '');
       d.innerHTML = '<strong>'+T[lang].sources+'</strong><br>' + b.body.sources.map(function(x){
         return '<a href="'+x.u+'" target="_blank" rel="noopener">'+x.t+'</a>'; }).join('<br>');
       host.appendChild(d);
@@ -341,6 +405,10 @@ function paint(){
   else if(!Q.length) st.textContent = mode === 'series' ? T[lang].noSeries : T[lang].empty;
   else st.textContent = T[lang].ready + ' · ' + fmt(totalChars/cps);
   highlight();
+  if(playing && totalChars){
+    var pc = Math.floor(pos / totalChars * 100);
+    [25, 50, 75].forEach(function(mk){ if(pc >= mk && !milestones[mk]){ milestones[mk] = true; track('progress-' + mk); } });
+  }
 }
 
 function pickVoice(){
@@ -381,7 +449,7 @@ function speakFrom(p){
   u.onend = function(){
     if(myGen !== gen) return;
     if(i + 1 < Q.length){ speakFrom(Q[i+1].gstart); }
-    else { stop(true); document.getElementById('status').textContent = T[lang].done; }
+    else { if(!milestones[100]){ milestones[100] = true; track('progress-100'); } stop(true); document.getElementById('status').textContent = T[lang].done; }
   };
   u.onerror = function(){ if(myGen !== gen) return; stop(true); };
   utter = u;
@@ -406,6 +474,16 @@ function startTick(){
 function stopTick(){ if(tick){ clearInterval(tick); tick = null; } }
 function play(){
   if(playing && !paused) return;
+  if(pos === 0 && Q.length){
+    trackDaily('listener-' + (myRole || 'unknown'));
+    track('play-lang-' + lang, true);
+    track('play-mode-' + (mode === 'series' ? 'topic' : 'week'), true);
+    if(mode === 'series'){ track('play-series-' + sTopic, true); }
+    else {
+      track('play-edition-' + ed().date, true);
+      sectionsOf(ed()).forEach(function(s){ if(s.id !== 'intro' && s.id !== 'outro' && rank(s.id) !== 50 && selected[s.id]) track('play-topic-' + s.id, true); });
+    }
+  }
   speakFrom(pos >= totalChars - 1 ? 0 : pos);
 }
 function pause(){
@@ -502,6 +580,7 @@ function refresh(){
   if(series) seriesUI(); else chips();
   if(series) document.getElementById('weekstamp').textContent = roleName(sTopic);
   editions(); buildQueue(); render(); pos = 0; paint(); buttons();
+  renderRole();
 }
 
 document.getElementById('nl').onclick = function(){ lang = 'nl'; save(); refresh(); };
@@ -534,13 +613,14 @@ document.addEventListener('keydown', function(e){
 if(window.speechSynthesis) window.speechSynthesis.onvoiceschanged = function(){};
 window.addEventListener('beforeunload', function(){ try{ window.speechSynthesis.cancel(); }catch(e){} });
 var INFO = {
- nl:'<div class="langs"><button type="button" data-l="nl" class="on">NL</button><button type="button" data-l="en">EN</button></div><h2>Waarom deze app</h2><p>Mijn naam is Ton Vlot en ik werk bij EPAM in Nederland. Als delivery manager en data consultant verbind ik business strategie met de delivery van data en AI programma\'s. Daarnaast organiseer ik <b>The Best AI is Yet to Come!</b>, een korte wekelijkse sessie waarin collega\'s delen hoe zij AI in hun werk toepassen.</p><p>AI ontwikkelt zich sneller dan iemand kan bijhouden. Onze Data Consultants zijn het grootste deel van de week bij klanten, en de ontwikkelingen die voor hun rol van belang zijn, raken gemakkelijk ondergesneeuwd door de hype. Deze app biedt daarom per rol een beknopte briefing, bedoeld om te beluisteren in de auto of onderweg naar een klant. Het doel: van lezen over AI naar het dagelijks toepassen ervan.</p><p>De app is tevens een experiment met AI gedreven delivery. Een AI agent onderzoekt, schrijft, controleert en publiceert elke editie. Ik stel de regels op en beoordeel het resultaat.</p><h2>Hoe het werkt</h2><ul><li>Elke vrijdag analyseert een AI agent (Claude) release notes en officiële bronnen van onder meer Databricks, Snowflake, Microsoft, dbt, de grote cloudaanbieders, enterprise platforms en EPAM. Elke datum wordt gecontroleerd aan de hand van de bron.</li><li>De agent schrijft de briefing in het Nederlands en het Engels, met een onderdeel per onderwerp: Algemeen, EPAM, Data Governance, Data Engineering, BI, Data Architecture en Delivery.</li><li>Je toestel leest de briefing voor met de ingebouwde stem. Er zijn geen audiobestanden, geen account en geen tracking. Je voorkeuren worden alleen op je eigen toestel opgeslagen.</li><li><b>Per week</b>: selecteer je onderwerpen en beluister een editie. <b>Per onderwerp</b>: volg een onderwerp over meerdere weken, in chronologische volgorde.</li><li>Elk onderdeel vermeldt de bronnen, zodat elke bewering te controleren is. Omdat de inhoud door AI is gegenereerd, is het raadzaam deze te controleren voordat je hem bij een klant gebruikt.</li></ul><h2>Installeren</h2><ul><li><b>iPhone</b>: open de app in Safari, tik op Deel en kies "Zet op beginscherm".</li><li><b>Android</b>: open de app in Chrome, tik op het menu (drie puntjes) en kies "App installeren" of "Toevoegen aan startscherm".</li><li><b>Laptop</b>: klik in Chrome of Edge op het installatie icoon in de adresbalk.</li><li><b>Betere stemkwaliteit</b>: op iPhone via Instellingen &gt; Toegankelijkheid &gt; Gesproken materiaal &gt; Stemmen. Op Android zoek je in Instellingen op "tekst naar spraak".</li></ul><p class="small">Een persoonlijk initiatief, geen officieel EPAM product.</p>',
- en:'<div class="langs"><button type="button" data-l="nl">NL</button><button type="button" data-l="en" class="on">EN</button></div><h2>Why this app</h2><p>My name is Ton Vlot and I work at EPAM in the Netherlands. As a delivery manager and data consultant, I connect business strategy with the delivery of data and AI programmes. I also host <b>The Best AI is Yet to Come!</b>, a short weekly session in which colleagues share how they apply AI in their work.</p><p>AI is developing faster than anyone can keep up with. Our Data Consultants spend most of their week at clients, and the developments that matter for their role are easily lost in the hype. This app therefore offers a concise briefing per role, designed to be listened to in the car or on the way to a client. The aim is to move from reading about AI to applying it every day.</p><p>The app is also an experiment in AI-driven delivery. An AI agent researches, writes, verifies and publishes every edition. I define the rules and review the results.</p><h2>How it works</h2><ul><li>Every Friday, an AI agent (Claude) reviews release notes and official sources from Databricks, Snowflake, Microsoft, dbt, the major cloud providers, enterprise platforms and EPAM, among others. Every date is verified against its source.</li><li>The agent writes the briefing in Dutch and English, with one section per topic: General, EPAM, Data Governance, Data Engineering, BI, Data Architecture and Delivery.</li><li>Your device reads the briefing aloud using its built-in voice. There are no audio files, no account and no tracking. Your preferences are stored only on your own device.</li><li><b>By week</b>: select your topics and listen to a single edition. <b>By topic</b>: follow one topic across several weeks, in chronological order.</li><li>Each section lists its sources, so every statement can be verified. As the content is generated by AI, please verify it before using it with a client.</li></ul><h2>Install</h2><ul><li><b>iPhone</b>: open the app in Safari, tap Share and select "Add to Home Screen".</li><li><b>Android</b>: open the app in Chrome, tap the menu (three dots) and select "Install app" or "Add to Home screen".</li><li><b>Laptop</b>: in Chrome or Edge, click the install icon in the address bar.</li><li><b>Better voice quality</b>: on iPhone, go to Settings &gt; Accessibility &gt; Spoken Content &gt; Voices. On Android, search Settings for "text-to-speech".</li></ul><p class="small">A personal initiative, not an official EPAM product.</p>'
+ nl:'<div class="langs"><button type="button" data-l="nl" class="on">NL</button><button type="button" data-l="en">EN</button></div><h2>Waarom deze app</h2><p>Mijn naam is Ton Vlot en ik werk bij EPAM in Nederland. Als delivery manager en data consultant verbind ik business strategie met de delivery van data en AI programma\'s. Daarnaast organiseer ik <b>The Best AI is Yet to Come!</b>, een korte wekelijkse sessie waarin collega\'s delen hoe zij AI in hun werk toepassen.</p><p>AI ontwikkelt zich sneller dan iemand kan bijhouden. Onze Data Consultants zijn het grootste deel van de week bij klanten, en de ontwikkelingen die voor hun rol van belang zijn, raken gemakkelijk ondergesneeuwd door de hype. Deze app biedt daarom per rol een beknopte briefing, bedoeld om te beluisteren in de auto of onderweg naar een klant. Het doel: van lezen over AI naar het dagelijks toepassen ervan.</p><p>De app is tevens een experiment met AI gedreven delivery. Een AI agent onderzoekt, schrijft, controleert en publiceert elke editie. Ik stel de regels op en beoordeel het resultaat.</p><h2>Hoe het werkt</h2><ul><li>Elke vrijdag analyseert een AI agent (Claude) release notes en officiële bronnen van onder meer Databricks, Snowflake, Microsoft, dbt, de grote cloudaanbieders, enterprise platforms en EPAM. Elke datum wordt gecontroleerd aan de hand van de bron.</li><li>De agent schrijft de briefing in het Nederlands en het Engels, met een onderdeel per onderwerp: Algemeen, EPAM, Data Governance, Data Engineering, BI, Data Architecture en Delivery.</li><li>Je toestel leest de briefing voor met de ingebouwde stem. Er zijn geen audiobestanden en er is geen account. De app telt anoniem gebruik, zoals welke onderwerpen worden afgespeeld en, als je die deelt, je rol. Zonder cookies en zonder persoonsgegevens. Je voorkeuren worden alleen op je eigen toestel opgeslagen.</li><li><b>Per week</b>: selecteer je onderwerpen en beluister een editie. <b>Per onderwerp</b>: volg een onderwerp over meerdere weken, in chronologische volgorde.</li><li>Elk onderdeel vermeldt de bronnen, zodat elke bewering te controleren is. Omdat de inhoud door AI is gegenereerd, is het raadzaam deze te controleren voordat je hem bij een klant gebruikt.</li></ul><h2>Installeren</h2><ul><li><b>iPhone</b>: open de app in Safari, tik op Deel en kies "Zet op beginscherm".</li><li><b>Android</b>: open de app in Chrome, tik op het menu (drie puntjes) en kies "App installeren" of "Toevoegen aan startscherm".</li><li><b>Laptop</b>: klik in Chrome of Edge op het installatie icoon in de adresbalk.</li><li><b>Betere stemkwaliteit</b>: op iPhone via Instellingen &gt; Toegankelijkheid &gt; Gesproken materiaal &gt; Stemmen. Op Android zoek je in Instellingen op "tekst naar spraak".</li></ul><p class="small">Een persoonlijk initiatief, geen officieel EPAM product.</p>',
+ en:'<div class="langs"><button type="button" data-l="nl">NL</button><button type="button" data-l="en" class="on">EN</button></div><h2>Why this app</h2><p>My name is Ton Vlot and I work at EPAM in the Netherlands. As a delivery manager and data consultant, I connect business strategy with the delivery of data and AI programmes. I also host <b>The Best AI is Yet to Come!</b>, a short weekly session in which colleagues share how they apply AI in their work.</p><p>AI is developing faster than anyone can keep up with. Our Data Consultants spend most of their week at clients, and the developments that matter for their role are easily lost in the hype. This app therefore offers a concise briefing per role, designed to be listened to in the car or on the way to a client. The aim is to move from reading about AI to applying it every day.</p><p>The app is also an experiment in AI-driven delivery. An AI agent researches, writes, verifies and publishes every edition. I define the rules and review the results.</p><h2>How it works</h2><ul><li>Every Friday, an AI agent (Claude) reviews release notes and official sources from Databricks, Snowflake, Microsoft, dbt, the major cloud providers, enterprise platforms and EPAM, among others. Every date is verified against its source.</li><li>The agent writes the briefing in Dutch and English, with one section per topic: General, EPAM, Data Governance, Data Engineering, BI, Data Architecture and Delivery.</li><li>Your device reads the briefing aloud using its built-in voice. There are no audio files and no account. The app counts anonymous usage, such as which topics are played and, if you share it, your role. No cookies and no personal data. Your preferences are stored only on your own device.</li><li><b>By week</b>: select your topics and listen to a single edition. <b>By topic</b>: follow one topic across several weeks, in chronological order.</li><li>Each section lists its sources, so every statement can be verified. As the content is generated by AI, please verify it before using it with a client.</li></ul><h2>Install</h2><ul><li><b>iPhone</b>: open the app in Safari, tap Share and select "Add to Home Screen".</li><li><b>Android</b>: open the app in Chrome, tap the menu (three dots) and select "Install app" or "Add to Home screen".</li><li><b>Laptop</b>: in Chrome or Edge, click the install icon in the address bar.</li><li><b>Better voice quality</b>: on iPhone, go to Settings &gt; Accessibility &gt; Spoken Content &gt; Voices. On Android, search Settings for "text-to-speech".</li></ul><p class="small">A personal initiative, not an official EPAM product.</p>'
 };
 var infoOpen = false;
 function renderInfo(){
   var v = document.getElementById('infoView');
-  v.innerHTML = INFO[lang];
+  v.innerHTML = INFO[lang] + '<p class="small">' + RQ[lang].mine + ': ' + (myRole && myRole !== 'skip' ? roleName2(myRole) : RQ[lang].none) + ' &middot; <button type="button" class="linkbtn" id="roleReset">' + RQ[lang].change + '</button></p>';
+  document.getElementById('roleReset').onclick = function(){ myRole = ''; try{ localStorage.removeItem('brief.myrole'); }catch(e){} toggleInfo(false); refresh(); };
   var bs = v.querySelectorAll('[data-l]');
   for(var i=0;i<bs.length;i++) bs[i].onclick = function(){ lang = this.getAttribute('data-l'); save(); refresh(); renderInfo(); };
 }
@@ -551,8 +631,14 @@ function toggleInfo(open){
   var b = document.getElementById('infoBtn');
   b.className = open ? 'infobtn on' : 'infobtn';
   b.innerHTML = open ? '&#10005;' : 'i';
-  if(open){ renderInfo(); window.scrollTo(0,0); }
+  if(open){ renderInfo(); window.scrollTo(0,0); track('info-open', true); }
 }
+document.getElementById('script').addEventListener('click', function(e){
+  var a = e.target.closest ? e.target.closest('a') : null;
+  if(!a) return;
+  var box = a.closest('.sources');
+  track('source-' + ((box && box.getAttribute('data-id')) || 'other'));
+});
 document.getElementById('infoBtn').onclick = function(){ toggleInfo(!infoOpen); };
 refresh();
 })();
