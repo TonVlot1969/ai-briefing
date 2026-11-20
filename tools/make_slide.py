@@ -15,32 +15,31 @@ spec.json:
   "url": "https://tonvlot1969.github.io/ai-briefing/ai-briefing.html"
 }
 
-One EPAM-branded content slide in the style of the session deck: Snow background,
-Night header bar, Calibri, Cobalt and Slate accents, one line per topic, QR code to
-the app, footer "EPAM Proprietary & Confidential.", and the explanation of every
-line in the speaker notes. The script refuses text that is too long, so the caller
-shortens the wording instead of the font.
+Since 20 November 2026 the slide is filled into tools/slide_template.pptx, Ton's
+layout on the EPAM session template: gradient title with a headphones icon, the
+app screenshot top right, seven topic rows, the QR card on the right, and the EPAM
+master footer (logo, "EPAM Proprietary & Confidential.", page number). Only the
+week, the seven lines, the call to action and the speaker notes change. The QR
+code in the template points at the app URL below. The script refuses text that is
+too long, so the caller shortens the wording instead of the font.
 """
-import io
 import json
+import os
 import sys
 
-import qrcode
 from pptx import Presentation
-from pptx.dml.color import RGBColor
-from pptx.enum.shapes import MSO_SHAPE
-from pptx.enum.text import MSO_ANCHOR, PP_ALIGN
-from pptx.util import Inches, Pt
 
-NIGHT = RGBColor(0x06, 0x06, 0x06)
-SNOW = RGBColor(0xFB, 0xFA, 0xFA)
-SEA = RGBColor(0x00, 0xF6, 0xFF)
-COBALT = RGBColor(0x00, 0x47, 0xFF)
-SLATE = RGBColor(0x4A, 0x71, 0xBD)
-TINT = RGBColor(0xE9, 0xEF, 0xFF)
+TEMPLATE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "slide_template.pptx")
+APP_URL = "https://tonvlot1969.github.io/ai-briefing/ai-briefing.html"
 
 TAGS = ["General AI", "EPAM", "Governance", "Engineering", "BI", "Architecture", "Delivery"]
 LIMITS = {"week": 34, "text": 56, "cta": 52}
+
+# shape names in the template
+TITLE = "Title 1"
+TAG_BOXES = ["TextBox 6", "TextBox 10", "TextBox 14", "TextBox 18", "TextBox 22", "TextBox 26", "TextBox 30"]
+LINE_BOXES = ["TextBox 7", "TextBox 11", "TextBox 15", "TextBox 19", "TextBox 23", "TextBox 27", "TextBox 31"]
+CTA = "TextBox 32"
 
 
 def check(spec):
@@ -56,84 +55,42 @@ def check(spec):
             errs.append(f"line too long ({len(i['text'])}>{LIMITS['text']}): {i['text']!r}")
         if not i.get("note", "").strip():
             errs.append(f"missing note for {i.get('tag')}")
+    if spec.get("url") != APP_URL:
+        errs.append(f"url must be {APP_URL} (the template's QR code points there)")
     if "—" in json.dumps(spec, ensure_ascii=False):
         errs.append("em-dash found, use a period or a comma")
     if errs:
         sys.exit("SLIDE SPEC REJECTED\n" + "\n".join(errs))
 
 
-def box(slide, x, y, w, h, text, size, color, bold=False, align=PP_ALIGN.LEFT, anchor=MSO_ANCHOR.MIDDLE):
-    tb = slide.shapes.add_textbox(Inches(x), Inches(y), Inches(w), Inches(h))
-    tf = tb.text_frame
-    tf.word_wrap = True
-    tf.margin_left = tf.margin_right = Inches(0)
-    tf.margin_top = tf.margin_bottom = Inches(0)
-    tf.vertical_anchor = anchor
-    p = tf.paragraphs[0]
-    p.alignment = align
-    r = p.add_run()
-    r.text = text
-    r.font.name = "Calibri"
-    r.font.size = Pt(size)
-    r.font.bold = bold
-    r.font.color.rgb = color
-    return tb
-
-
-def rect(slide, x, y, w, h, fill, shape=MSO_SHAPE.RECTANGLE):
-    s = slide.shapes.add_shape(shape, Inches(x), Inches(y), Inches(w), Inches(h))
-    s.fill.solid()
-    s.fill.fore_color.rgb = fill
-    s.line.fill.background()
-    s.shadow.inherit = False
-    return s
+def set_text(shape, text):
+    """Replace a text box's words, keeping the first run's formatting."""
+    p = shape.text_frame.paragraphs[0]
+    runs = p.runs
+    runs[0].text = text
+    for r in runs[1:]:
+        r._r.getparent().remove(r._r)
 
 
 def main(spec_path, out_path):
     spec = json.load(open(spec_path, encoding="utf-8"))
     check(spec)
 
-    prs = Presentation()
-    prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
-    s = prs.slides.add_slide(prs.slide_layouts[6])
-    bg = s.background.fill
-    bg.solid()
-    bg.fore_color.rgb = SNOW
+    prs = Presentation(TEMPLATE)
+    s = prs.slides[0]
+    shapes = {sh.name: sh for sh in s.shapes}
 
-    # header bar
-    rect(s, 0, 0, 13.333, 1.0, NIGHT)
-    box(s, 0.6, 0.15, 8.4, 0.7, "AI Briefing  ·  " + spec["week"], 26, SNOW, bold=True)
-    box(s, 8.9, 0.15, 3.85, 0.7, "The Best AI is Yet to Come!", 16, SEA, bold=True, align=PP_ALIGN.RIGHT)
-
-    # seven one-liners, one per topic
-    y, step, h = 1.3, 0.66, 0.56
-    for it in spec["items"]:
-        rect(s, 0.6, y, 8.75, h, TINT, MSO_SHAPE.ROUNDED_RECTANGLE).adjustments[0] = 0.2
-        rect(s, 0.6, y, 0.1, h, COBALT)
-        box(s, 0.85, y, 1.75, h, it["tag"].upper(), 13, SLATE, bold=True)
-        box(s, 2.6, y, 6.65, h, it["text"], 18, NIGHT)
-        y += step
-
-    # call to action
-    box(s, 0.6, y + 0.12, 8.75, 0.5, spec["cta"], 20, COBALT, bold=True)
-
-    # QR card on the right
-    rect(s, 9.75, 1.3, 3.0, 5.15, TINT, MSO_SHAPE.ROUNDED_RECTANGLE).adjustments[0] = 0.06
-    qr = qrcode.QRCode(border=1, box_size=12, error_correction=qrcode.constants.ERROR_CORRECT_M)
-    qr.add_data(spec["url"])
-    qr.make(fit=True)
-    img = qr.make_image(fill_color="#060606", back_color="#FBFAFA")
-    buf = io.BytesIO()
-    img.save(buf, format="PNG")
-    buf.seek(0)
-    s.shapes.add_picture(buf, Inches(9.95), Inches(1.5), Inches(2.6), Inches(2.6))
-    box(s, 9.85, 4.3, 2.8, 0.5, "Scan and listen", 22, COBALT, bold=True, align=PP_ALIGN.CENTER)
-    box(s, 9.85, 4.85, 2.8, 0.4, "NL or EN, 7 topics", 15, SLATE, align=PP_ALIGN.CENTER)
-    box(s, 9.85, 5.25, 2.8, 0.4, "pick your role", 15, SLATE, align=PP_ALIGN.CENTER)
-    box(s, 9.85, 5.85, 2.8, 0.4, "tonvlot1969.github.io/ai-briefing", 11, SLATE, align=PP_ALIGN.CENTER)
-
-    # footer, as in the session deck
-    box(s, 0.6, 6.95, 6.0, 0.3, "EPAM Proprietary & Confidential.", 10, SLATE)
+    set_text(shapes[TITLE], "AI Briefing  ·  " + spec["week"])
+    for i, it in enumerate(spec["items"]):
+        tag = shapes[TAG_BOXES[i]].text_frame.text.strip()
+        if tag.upper() != it["tag"].upper():
+            sys.exit(f"template row {i + 1} is {tag!r}, expected {it['tag']!r}")
+        set_text(shapes[LINE_BOXES[i]], it["text"])
+    # the first row's text box sits a little lower in the template: align it with the others
+    g, ref = shapes[LINE_BOXES[0]], shapes[LINE_BOXES[1]]
+    g.top, g.height = shapes[TAG_BOXES[0]].top, ref.height
+    g.text_frame._txBody.bodyPr.set("anchor", ref.text_frame._txBody.bodyPr.get("anchor") or "ctr")
+    set_text(shapes[CTA], spec["cta"])
 
     # speaker notes: the explanation behind every line
     lines = [f"AI Briefing, {spec['week']}. One line per topic, explained below.", ""]
