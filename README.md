@@ -16,6 +16,15 @@ out so the voice does not mangle them.
 `briefings/briefing-YYYY-MM-DD.html` is a dated snapshot of the whole app.
 `archive.html` links to every snapshot, newest first.
 
+## Audio (from 20 November 2026)
+
+Editions can carry pre-recorded MP3s, one per section per language, made with ElevenLabs
+(Dutch voice "Harry", English voice "James", model eleven_v4). They live in
+`audio/YYYY-MM-DD/<lang>-<section>.mp3` and are linked from the edition JSON as
+`"audio": {"src": "...", "dur": <seconds>}` inside each section's `nl` / `en` block.
+When a section has audio the player plays the MP3; otherwise it falls back to the
+browser voice, so older editions still work.
+
 ## Publishing
 
 Generated and pushed every Friday at 12:00 by a scheduled Claude Cowork task, so it
